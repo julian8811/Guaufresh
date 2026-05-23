@@ -19,7 +19,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-background text-foreground border-t border-border">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
           <div className="flex flex-col items-center gap-4 lg:items-start">
@@ -33,7 +33,7 @@ export function Footer() {
                 decoding="async"
               />
             </a>
-            <p className="max-w-xs text-center text-sm text-background/70 lg:text-left">
+            <p className="max-w-xs text-center text-sm text-muted-foreground lg:text-left font-medium">
               Espuma limpiadora para perros con ingredientes naturales. Cuida a tu peludo con amor.
             </p>
           </div>
@@ -43,7 +43,7 @@ export function Footer() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-background/70 transition-colors hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-medium"
               >
                 {link.label}
               </a>
@@ -52,24 +52,77 @@ export function Footer() {
         </div>
 
         <nav
-          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-background/10 pt-6"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-border pt-6"
           aria-label="Información legal"
         >
           {legalLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-xs text-background/55 transition-colors hover:text-background/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:text-sm"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-sm font-medium"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="mt-6 border-t border-background/10 pt-8">
-          <p className="text-center text-sm text-background/50">
+        <div className="mt-6 border-t border-border pt-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <p className="text-center text-sm text-muted-foreground font-medium order-2 sm:order-1">
             © {currentYear} Guau Fresh. Todos los derechos reservados.
           </p>
+          
+          {/* Métodos de Pago */}
+          <div className="flex flex-wrap items-center justify-center gap-5 text-muted-foreground/35 order-1 sm:order-2" aria-label="Métodos de pago aceptados">
+            {/* Visa */}
+            <img 
+              src={baseHref('/payments/visa.png')} 
+              alt="Visa" 
+              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* Mastercard */}
+            <img 
+              src={baseHref('/payments/mastercard.png')} 
+              alt="Mastercard" 
+              className="h-5 sm:h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* American Express */}
+            <img 
+              src={baseHref('/payments/american-express.png')} 
+              alt="American Express" 
+              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* PSE */}
+            <img 
+              src={baseHref('/payments/pse.png')} 
+              alt="PSE" 
+              className="h-5 sm:h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* Nequi */}
+            <img 
+              src={baseHref('/payments/nequi.png')} 
+              alt="Nequi" 
+              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* Daviplata */}
+            <img 
+              src={baseHref('/payments/daviplata.png')} 
+              alt="Daviplata" 
+              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+            {/* Efecty */}
+            <img 
+              src={baseHref('/payments/efecty.png')} 
+              alt="Efecty" 
+              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </footer>

@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { Header } from '@/components/guaufresh/Header';
 import { HeroCarousel } from '@/components/guaufresh/HeroCarousel';
 import { Benefits } from '@/components/guaufresh/Benefits';
+import { BeforeAfter } from '@/components/guaufresh/BeforeAfter';
 import { Product } from '@/components/guaufresh/Product';
+import { PetCalculator } from '@/components/guaufresh/PetCalculator';
 import { Reviews } from '@/components/guaufresh/Reviews';
 import { HowToUse } from '@/components/guaufresh/HowToUse';
 import { Contact } from '@/components/guaufresh/Contact';
@@ -13,11 +15,13 @@ import { WhatsAppButton } from '@/components/guaufresh/WhatsAppButton';
 import { PromoPopup } from '@/components/guaufresh/PromoPopup';
 import { LeadSidebar } from '@/components/guaufresh/LeadSidebar';
 import { StructuredData } from '@/components/guaufresh/StructuredData';
+import { ChatBot } from '@/components/guaufresh/ChatBot';
+import { BubbleEffect } from '@/components/guaufresh/BubbleEffect';
 ---
 
 <BaseLayout title="Inicio">
   <StructuredData />
-  <div class="min-h-screen">
+  <div class="relative min-h-screen">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
@@ -25,18 +29,22 @@ import { StructuredData } from '@/components/guaufresh/StructuredData';
       Saltar al contenido principal
     </a>
     <Header client:load />
-    <main id="main-content">
+    <main id="main-content" class="relative z-10">
       <HeroCarousel client:load />
       <Benefits client:visible />
+      <BeforeAfter client:visible />
       <Product client:visible />
+      <PetCalculator client:visible />
       <Reviews client:visible />
-      <HowToUse />
+      <HowToUse client:visible />
       <Contact client:visible />
     </main>
     <Footer />
     <CartSheet client:load />
     <WhatsAppButton />
+    <ChatBot client:load />
     <PromoPopup client:load />
     <LeadSidebar client:load />
+    <BubbleEffect client:load />
   </div>
 </BaseLayout>

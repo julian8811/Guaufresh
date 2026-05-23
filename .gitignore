@@ -9,15 +9,19 @@ __v0_jsx-dev-runtime.ts
 next.user-config.*
 
 # Environment variables
+.env
 .env*.local
 
-# Common ignores
-node_modules/
-.next/
-out/
+# Astro
+.astro/
 dist/
+node_modules/
+
+# Common ignores
+out/
 .DS_Store
 .vercel
+.agent/
 
 # Windows / OneDrive alternate stream files
 *Zone.Identifier

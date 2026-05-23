@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useCallback, type FormEvent } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Star, Quote, ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { es } from "date-fns/locale"
@@ -21,7 +22,6 @@ import { cn } from "@/lib/utils"
 import { baseHref } from "@/lib/base-href"
 import { supabase, type Review as DbReview } from "@/lib/supabase"
 
-/** Fotos en `public/reviews/` — emparejadas con mascota y raza del testimonio */
 const PET_IMAGES = {
   luna: baseHref("/reviews/luna-golden-retriever.png"),
   max: baseHref("/reviews/max-bulldog-frances.png"),
@@ -158,7 +158,7 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={star}
           className={cn(
-            "h-4 w-4",
+            "h-4 w-4 transition-transform duration-300 hover:scale-110",
             star <= rating ? "fill-secondary text-secondary" : "fill-muted text-muted"
           )}
           aria-hidden="true"
@@ -180,8 +180,10 @@ function RatingInput({
   return (
     <div className="flex gap-1" role="group" aria-labelledby={id}>
       {[1, 2, 3, 4, 5].map((star) => (
-        <button
+        <motion.button
           key={star}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
           type="button"
           className="rounded p-0.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
           onClick={() => onChange(star)}
@@ -194,7 +196,7 @@ function RatingInput({
               star <= value ? "fill-secondary text-secondary" : "fill-muted text-muted"
             )}
           />
-        </button>
+        </motion.button>
       ))}
     </div>
   )
@@ -246,7 +248,7 @@ export function Reviews() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalPages)
-    }, 5000)
+    }, 7000)
     return () => clearInterval(interval)
   }, [totalPages])
 
@@ -349,20 +351,61 @@ export function Reviews() {
     }
   }
 
-  return (
-    <section id="reseñas" className="bg-muted/50 py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Lo que dicen nuestros clientes
-          </h2>
-          <p className="mt-4 text-pretty text-lg text-muted-foreground">
-            Miles de mascotas felices con Guau Fresh
-          </p>
+  // Animación del contenedor grid en cambio de página
+  const gridVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.4, ease: "easeOut", staggerChildren: 0.08 } 
+    },
+    exit: { 
+      opacity: 0, 
+      y: -15, 
+      transition: { duration: 0.3, ease: "easeIn" } 
+    }
+  }
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
-            <div className="flex items-center gap-2">
-              <span className="text-4xl font-bold text-foreground">{averageRating}</span>
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+  }
+
+  return (
+    <section id="reseñas" className="bg-muted/30 py-20 sm:py-28 relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+        
+        {/* Título */}
+        <div className="text-center max-w-2xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+          >
+            Lo que dicen nuestros clientes
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-4 text-base sm:text-lg text-muted-foreground font-medium"
+          >
+            Miles de mascotas felices y limpias gracias a Guau Fresh.
+          </motion.p>
+
+          {/* Promedio animado */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8 bg-card border border-border p-5 rounded-3xl shadow-sm inline-flex mx-auto"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-4xl font-extrabold font-sans text-primary">{averageRating}</span>
               <div className="flex flex-col items-start">
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -378,74 +421,100 @@ export function Reviews() {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  Basado en {reviews.length} reseñas
+                <span className="text-xs font-semibold text-muted-foreground mt-1">
+                  Basado en {reviews.length} testimonios reales
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="mt-12 grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {currentReviews.map((review) => (
-            <Card key={review.id} className="relative flex h-full flex-col overflow-hidden bg-card">
-              <div className="relative h-48 w-full overflow-hidden bg-muted">
-                <img
-                  src={review.petImage}
-                  alt={`${review.petName} - ${review.petBreed}`}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-
-              <CardContent className="flex flex-1 flex-col p-4 sm:p-6">
-                <Quote className="absolute top-48 right-4 h-8 w-8 text-primary/10" aria-hidden="true" />
-
-                <div className="flex items-start gap-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-semibold text-foreground">{review.name}</h3>
-                      {review.verified && (
-                        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                          ✓
-                        </span>
-                      )}
+        {/* Carrusel de reseñas con AnimatePresence */}
+        <div className="relative min-h-[460px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              variants={gridVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="mt-12 grid auto-rows-max grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {currentReviews.map((review) => (
+                <motion.div
+                  key={review.id}
+                  variants={cardVariants}
+                  whileHover={{ y: -6, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.1)" }}
+                  className="h-full"
+                >
+                  <Card className="relative flex h-full flex-col overflow-hidden bg-card border border-border shadow-sm rounded-3xl transition-all">
+                    {/* Imagen de la mascota */}
+                    <div className="relative h-56 w-full overflow-hidden bg-muted group">
+                      <img
+                        src={review.petImage}
+                        alt={`${review.petName} - ${review.petBreed}`}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                     </div>
-                    <p className="text-xs text-muted-foreground">{review.location}</p>
-                  </div>
-                </div>
 
-                <div className="mt-3 flex items-center justify-between">
-                  <StarRating rating={review.rating} />
-                  <span className="text-xs text-muted-foreground">{review.date}</span>
-                </div>
+                    <CardContent className="flex flex-1 flex-col p-6 relative">
+                      <Quote className="absolute top-6 right-6 h-8 w-8 text-primary/10" aria-hidden="true" />
 
-                <div className="mt-3 rounded-lg border border-primary/10 bg-primary/5 px-3 py-2">
-                  <p className="text-xs text-muted-foreground">
-                    <span className="font-semibold text-foreground">{review.petName}</span>
-                    {" · "}
-                    <span className="text-primary">{review.petBreed}</span>
-                  </p>
-                </div>
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-base font-bold text-foreground">{review.name}</h3>
+                            {review.verified && (
+                              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-primary border border-primary/20">
+                                Verificado
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs font-semibold text-muted-foreground mt-0.5">{review.location}</p>
+                        </div>
+                      </div>
 
-                <p className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-foreground/80">
-                  &ldquo;{review.comment}&rdquo;
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+                      <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
+                        <StarRating rating={review.rating} />
+                        <span className="text-xs font-medium text-muted-foreground">{review.date}</span>
+                      </div>
+
+                      {/* Info de la Mascota */}
+                      <div className="mt-4 rounded-2xl border border-secondary/15 bg-secondary/5 px-4 py-2.5">
+                        <p className="text-xs font-semibold text-muted-foreground">
+                          Mascota: <span className="font-bold text-foreground">{review.petName}</span>
+                          {" · "}
+                          Raza: <span className="text-primary font-bold">{review.petBreed}</span>
+                        </p>
+                      </div>
+
+                      <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground/80 font-medium italic">
+                        &ldquo;{review.comment}&rdquo;
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
+        {/* Paginación */}
         {totalPages > 1 && (
           <div className="mt-8 flex items-center justify-center gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToPrevious}
-              aria-label="Reseñas anteriores"
-            >
-              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToPrevious}
+                aria-label="Reseñas anteriores"
+                className="rounded-full h-10 w-10 border-border bg-card shadow-sm"
+              >
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+              </Button>
+            </motion.div>
 
             <div className="flex gap-2" role="tablist" aria-label="Páginas de reseñas">
               {Array.from({ length: totalPages }).map((_, index) => (
@@ -456,37 +525,47 @@ export function Reviews() {
                   aria-selected={currentIndex === index}
                   aria-label={`Página ${index + 1}`}
                   className={cn(
-                    "h-2.5 w-2.5 rounded-full transition-colors",
+                    "h-2 rounded-full transition-all duration-300",
                     currentIndex === index
-                      ? "bg-primary"
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      ? "w-6 bg-primary"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
                   )}
                   onClick={() => setCurrentIndex(index)}
                 />
               ))}
             </div>
 
-            <Button variant="outline" size="icon" onClick={goToNext} aria-label="Reseñas siguientes">
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={goToNext} 
+                aria-label="Reseñas siguientes"
+                className="rounded-full h-10 w-10 border-border bg-card shadow-sm"
+              >
+                <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              </Button>
+            </motion.div>
           </div>
         )}
 
+        {/* Botón de acción escribir reseña */}
         <div className="mt-12 text-center">
-          <p className="text-muted-foreground">
-            ¿Ya probaste Guau Fresh? Comparte tu experiencia con nosotros
+          <p className="text-sm font-semibold text-muted-foreground">
+            ¿Ya probaste Guau Fresh? Compartí tu experiencia con nosotros
           </p>
-          <Button
-            type="button"
-            variant="outline"
-            className="mt-4"
-            onClick={() => {
-              resetForm()
-              setDialogOpen(true)
-            }}
-          >
-            Escribir una Reseña
-          </Button>
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="inline-block mt-4">
+            <Button
+              type="button"
+              className="bg-primary text-white hover:bg-primary/95 font-sans font-bold text-sm tracking-wide rounded-full px-8 py-5 h-12 shadow-md shadow-primary/10 border border-primary/20"
+              onClick={() => {
+                resetForm()
+                setDialogOpen(true)
+              }}
+            >
+              Escribir una Reseña
+            </Button>
+          </motion.div>
         </div>
       </div>
 
@@ -497,18 +576,18 @@ export function Reviews() {
           if (!open) resetForm()
         }}
       >
-        <DialogContent className="max-h-[min(90vh,640px)] overflow-y-auto sm:max-w-lg">
+        <DialogContent className="max-h-[min(90vh,640px)] overflow-y-auto sm:max-w-lg rounded-3xl border-border bg-card p-6 shadow-2xl">
           <form onSubmit={handleSubmitReview}>
             <DialogHeader>
-              <DialogTitle>Escribe tu reseña</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="font-secondary text-2xl text-foreground font-normal">Escribí tu reseña</DialogTitle>
+              <DialogDescription className="text-sm text-muted-foreground mt-1">
                 Tu opinión se publicará en esta sección para ayudar a otras familias con mascotas.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="grid gap-4 py-2">
+            <div className="grid gap-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="review-author">Tu nombre</Label>
+                <Label htmlFor="review-author" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Tu nombre</Label>
                 <Input
                   id="review-author"
                   autoComplete="name"
@@ -516,49 +595,53 @@ export function Reviews() {
                   onChange={(e) => setAuthorName(e.target.value)}
                   placeholder="Ej. Andrea Gómez"
                   maxLength={80}
+                  className="rounded-xl border-border bg-muted/20"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="review-location">Ciudad</Label>
+                <Label htmlFor="review-location" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Ciudad</Label>
                 <Input
                   id="review-location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Ej. Bogotá"
                   maxLength={80}
+                  className="rounded-xl border-border bg-muted/20"
                 />
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="review-pet">Nombre de tu mascota</Label>
+                  <Label htmlFor="review-pet" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Nombre de tu mascota</Label>
                   <Input
                     id="review-pet"
                     value={petName}
                     onChange={(e) => setPetName(e.target.value)}
                     placeholder="Ej. Firulais"
                     maxLength={60}
+                    className="rounded-xl border-border bg-muted/20"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="review-breed">Raza</Label>
+                  <Label htmlFor="review-breed" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Raza</Label>
                   <Input
                     id="review-breed"
                     value={petBreed}
                     onChange={(e) => setPetBreed(e.target.value)}
                     placeholder="Ej. Mestizo"
                     maxLength={80}
+                    className="rounded-xl border-border bg-muted/20"
                     required
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label id="review-rating-label">Calificación</Label>
+                <Label id="review-rating-label" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Calificación</Label>
                 <RatingInput value={rating} onChange={setRating} id="review-rating-label" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="review-comment">Comentario</Label>
+                <Label htmlFor="review-comment" className="font-semibold text-xs uppercase tracking-wider text-muted-foreground">Comentario</Label>
                 <Textarea
                   id="review-comment"
                   value={comment}
@@ -566,27 +649,32 @@ export function Reviews() {
                   placeholder="Cuéntanos cómo te fue con el producto (mínimo 10 caracteres)."
                   rows={4}
                   maxLength={1200}
-                  className="min-h-[100px] resize-y"
+                  className="min-h-[100px] resize-y rounded-xl border-border bg-muted/20"
                   required
                 />
               </div>
               {formError && (
-                <p className="text-sm text-destructive" role="alert">
+                <p className="text-sm font-semibold text-destructive mt-1" role="alert">
                   {formError}
                 </p>
               )}
             </div>
 
-            <DialogFooter className="gap-2 sm:gap-0">
+            <DialogFooter className="gap-2 sm:gap-0 mt-4 border-t border-border pt-4">
               <Button
                 type="button"
                 variant="ghost"
                 onClick={() => setDialogOpen(false)}
                 disabled={submitting}
+                className="rounded-xl font-bold text-sm"
               >
                 Cancelar
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button 
+                type="submit" 
+                disabled={submitting}
+                className="bg-primary hover:bg-primary/95 text-white font-bold rounded-xl px-5"
+              >
                 {submitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />

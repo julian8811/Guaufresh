@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import { X, Tag, Truck, Clock } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
+import { baseHref } from "@/lib/base-href"
 
 const POPUP_DELAY_MS = 3000
 const POPUP_STORAGE_KEY = "guaufresh_popup_dismissed"
@@ -30,8 +31,7 @@ export function PromoPopup() {
       id: "guaufresh-150ml",
       name: "Espuma Limpiadora Guau Fresh 150mL",
       price: 40500,
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png",
+      image: baseHref("/product-foam.png"),
     })
     openCart(true)
     handleClose()
@@ -70,7 +70,7 @@ export function PromoPopup() {
         {/* Top image band - Smaller height on mobile */}
         <div className="relative h-40 w-full bg-primary sm:h-52">
           <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post13_pelaje_brillante-HQZvpyJanGIP0qGwDonXmNKfPvg667.png"
+              src={baseHref("/reviews/max-bulldog-frances.png")}
               alt="Bulldog feliz con Guau Fresh"
               className="h-full w-full object-cover object-top opacity-80"
             />

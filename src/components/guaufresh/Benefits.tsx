@@ -1,3 +1,6 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { Droplets, Sparkles, Heart, Leaf, Clock, Shield, type LucideIcon } from "lucide-react"
 import { baseHref } from "@/lib/base-href"
 
@@ -47,47 +50,101 @@ const benefits: Benefit[] = [
   },
 ]
 
+// Contenedor stagger para las tarjetas
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+// Variantes para cada tarjeta de beneficio
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 100, damping: 15 } 
+  },
+}
+
 export function Benefits() {
   return (
-    <section id="beneficios" className="bg-muted/40 py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+    <section id="beneficios" className="bg-muted/30 py-20 sm:py-28 relative overflow-hidden">
+      
+      {/* Elementos decorativos sutiles de fondo */}
+      <div className="absolute top-10 left-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
+      <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-secondary/5 blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        
+        {/* Título de la sección animado */}
+        <div className="text-center max-w-3xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+          >
             Beneficios para tu mascota
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground">
-            Descubre por qué Guau Fresh es la mejor opción para mantener a tu peludo limpio y feliz.
-          </p>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-4 text-base sm:text-lg text-muted-foreground font-medium"
+          >
+            Descubrí por qué Guau Fresh es la mejor opción para mantener a tu peludo limpio, hidratado y feliz sin el estrés del baño tradicional.
+          </motion.p>
         </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        {/* Grilla Bento Grid interactiva */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {benefits.map((benefit) => (
-            <article
+            <motion.article
               key={benefit.title}
-              className="group relative flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-black/5 bg-white shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus-within:ring-2 focus-within:ring-primary"
+              variants={itemVariants}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.15)" }}
+              className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary cursor-pointer"
             >
-              {/* Imagen de fondo: translúcida / apagada → color real al hover */}
+              {/* Imagen de fondo */}
               <div
-                className="absolute inset-0 scale-105 bg-cover bg-center transition-all duration-500 ease-out opacity-[0.38] saturate-[0.55] brightness-[0.92] group-hover:scale-100 group-hover:opacity-100 group-hover:saturate-100 group-hover:brightness-100"
+                className="absolute inset-0 scale-105 bg-cover bg-center transition-all duration-500 ease-out opacity-[0.25] saturate-[0.6] brightness-[0.9] group-hover:scale-100 group-hover:opacity-[0.85] group-hover:saturate-100 group-hover:brightness-100"
                 style={{ backgroundImage: `url(${benefit.image})` }}
               />
-              {/* Capa oscura suave para legibilidad; se reduce al hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/35 to-black/25 transition-opacity duration-500 group-hover:from-black/35 group-hover:via-black/15 group-hover:to-black/10" />
+              
+              {/* Capa degradada para contraste de texto */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-950/45 to-transparent transition-opacity duration-500 group-hover:from-neutral-950/70 group-hover:via-neutral-900/30" />
 
-              <div className="relative z-10 flex h-full flex-col p-6 sm:p-7">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/25 text-white shadow-sm backdrop-blur-[2px] transition-all duration-300 group-hover:scale-110 group-hover:bg-white/40 group-hover:text-white">
-                  <benefit.icon className="h-6 w-6" aria-hidden />
+              <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
+                {/* Contenedor del icono con animación en hover */}
+                <div className="mb-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white shadow-md backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white border border-white/20">
+                  <benefit.icon className="h-6 w-6 transition-transform duration-500 group-hover:rotate-12" aria-hidden />
                 </div>
-                <h3 className="text-lg font-bold leading-snug text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] transition-all duration-300 group-hover:scale-[1.02] group-hover:text-white group-hover:drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)] sm:text-xl">
+                
+                {/* Título de la tarjeta */}
+                <h3 className="text-xl font-bold leading-snug text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-wide">
                   {benefit.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-white/90 transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)] sm:text-[0.95rem]">
+                
+                {/* Descripción de la tarjeta */}
+                <p className="mt-2 text-sm leading-relaxed text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
                   {benefit.description}
                 </p>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

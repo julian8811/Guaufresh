@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { X, Gift, ChevronLeft, ChevronRight, Mail, User, Dog } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { baseHref } from "@/lib/base-href"
 
 export function LeadSidebar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -225,7 +226,7 @@ export function LeadSidebar() {
             {/* Product Preview */}
             <div className="mt-4 flex items-center gap-3 rounded-lg bg-muted/50 p-3">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png"
+                src={baseHref("/product-foam.png")}
                 alt="Guau Fresh"
                 width={50}
                 height={60}

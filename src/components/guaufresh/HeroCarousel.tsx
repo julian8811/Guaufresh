@@ -1,13 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
 import { baseHref } from "@/lib/base-href"
-
-/** Verde bosque para CTA */
-const CTA_FOREST = "bg-[#1a3d2e] hover:bg-[#143326] text-white shadow-lg"
 
 type Slide = {
   src: string
@@ -15,7 +13,6 @@ type Slide = {
   headline: string
 }
 
-/** 10 imágenes en `public/carousel/hero-01.png` … `hero-10.png` (landscape, object-fit: cover). */
 const carouselSlides: Slide[] = [
   {
     src: baseHref("/carousel/hero-01.png"),
@@ -78,21 +75,24 @@ const PRODUCT = {
 
 export function HeroCarousel() {
   const [current, setCurrent] = useState(0)
+  const [direction, setDirection] = useState(0) // -1 for left, 1 for right
   const { addItem } = useCartStore()
   const slide = carouselSlides[current]
 
   const nextSlide = () => {
+    setDirection(1)
     setCurrent((prev) => (prev + 1) % carouselSlides.length)
   }
 
   const prevSlide = () => {
+    setDirection(-1)
     setCurrent((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length)
   }
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % carouselSlides.length)
-    }, 6000)
+      nextSlide()
+    }, 8000)
     return () => clearInterval(id)
   }, [])
 
@@ -100,89 +100,161 @@ export function HeroCarousel() {
     addItem(PRODUCT)
   }
 
-  return (
-    <section id="inicio" className="relative w-full overflow-hidden bg-neutral-950">
-      {/* Contenedor 16:9 aprox.: alto acotado para que el encuadre landscape se vea completo en pantallas altas */}
-      <div className="relative min-h-[min(78vh,640px)] w-full md:min-h-[min(82vh,760px)] lg:min-h-[min(85vh,820px)]">
-        <img
-          key={`slide-${current}`}
-          src={slide.src}
-          alt={slide.alt}
-          className="absolute inset-0 h-full w-full object-cover object-center animate-fade-in"
-          decoding="async"
-        />
+  // Animación del contenedor de la imagen
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 1.05
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.5 },
+        scale: { duration: 0.6 }
+      }
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.4 }
+      }
+    })
+  }
 
-        {/* Overlay suave: legibilidad del texto sin tapar el producto (zona izquierda/centro más clara en desktop) */}
+  return (
+    <section id="inicio" className="relative w-full overflow-hidden bg-neutral-900">
+      <div className="relative min-h-[60vh] sm:min-h-[75vh] md:min-h-[85vh] lg:min-h-[90vh] w-full flex items-center justify-center">
+        
+        {/* Imagen deslizable */}
+        <div className="absolute inset-0 overflow-hidden">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.img
+              key={`slide-${current}`}
+              src={slide.src}
+              alt={slide.alt}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              decoding="async"
+            />
+          </AnimatePresence>
+        </div>
+
+        {/* Overlay degradado elegante */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10 md:bg-gradient-to-r md:from-black/15 md:via-black/10 md:to-black/55"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 md:bg-gradient-to-r md:from-black/50 md:via-black/20 md:to-transparent"
           aria-hidden
         />
 
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-5 pb-12 sm:p-8 md:justify-center md:pb-8 md:pr-10 lg:pr-16 xl:pr-20">
-          <div className="ml-auto w-full max-w-2xl text-center md:max-w-3xl md:text-right">
-            <h1 className="font-carousel text-balance text-2xl font-light italic leading-snug tracking-tight text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)] sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.65rem]">
-              {slide.headline}
-            </h1>
-            <p className="mt-3 font-secondary text-sm text-white/95 drop-shadow-[0_1px_12px_rgba(0,0,0,0.45)] sm:mt-4 sm:text-base md:text-lg">
-              Guau Fresh · 150&nbsp;mL · $45.000&nbsp;COP
-            </p>
-            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-end md:mt-8">
-              <Button
-                type="button"
-                size="lg"
-                className={`rounded-full px-8 py-5 font-secondary text-sm font-semibold tracking-wide sm:px-10 sm:py-6 sm:text-base ${CTA_FOREST}`}
-                onClick={handleCompraAhora}
+        {/* Contenido de texto con animación Stagger */}
+        <div className="container relative z-10 mx-auto px-6 py-12 md:py-24 flex items-end md:items-center justify-start h-full">
+          <div className="w-full max-w-2xl text-left md:max-w-xl lg:max-w-2xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`text-${current}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                Compra ahora
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                className="rounded-full border-white px-6 py-5 font-secondary text-sm text-white bg-transparent hover:bg-white/15 hover:text-white sm:py-6 sm:text-base"
-                asChild
-              >
-                <a href="#producto">Ver detalles</a>
-              </Button>
-            </div>
+                {/* Categoría superior */}
+                <span className="inline-block text-xs md:text-sm font-semibold uppercase tracking-widest text-primary bg-primary/10 backdrop-blur-sm px-3.5 py-1.5 rounded-full mb-4 border border-primary/20">
+                  Guau Fresh Cuidado Vegano
+                </span>
+                
+                {/* Headline con tipografía MADE Dillan (font-secondary) */}
+                <h1 className="font-secondary text-4xl sm:text-5xl md:text-6xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                  {slide.headline}
+                </h1>
+                
+                <p className="mt-4 font-sans text-base md:text-lg text-neutral-200 font-medium drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                  Espuma Limpiadora 150&nbsp;mL · <span className="text-[#F9F871] font-bold">$45.000&nbsp;COP</span>
+                </p>
+
+                {/* CTAs animados */}
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                      type="button"
+                      size="lg"
+                      className="bg-primary hover:bg-primary/95 text-white font-sans text-sm font-bold tracking-wide rounded-full px-8 py-6 shadow-lg shadow-primary/20 transition-all"
+                      onClick={handleCompraAhora}
+                    >
+                      Comprar ahora
+                    </Button>
+                  </motion.div>
+                  
+                  <motion.div whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.1)" }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      className="rounded-full border-white/60 text-white bg-transparent hover:text-white px-7 py-6 font-sans text-sm font-medium transition-all"
+                      asChild
+                    >
+                      <a href="#producto">Ver detalles</a>
+                    </Button>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
-        <button
+        {/* Navegación - Flechas */}
+        <motion.button
+          whileHover={{ scale: 1.05, x: -2 }}
+          whileTap={{ scale: 0.95 }}
           type="button"
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-neutral-800 shadow-lg transition-all hover:bg-white sm:left-4 sm:h-11 sm:w-11"
+          className="absolute left-4 top-1/2 z-20 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-neutral-900"
           aria-label="Imagen anterior"
         >
-          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
-        <button
+          <ChevronLeft className="h-6 w-6" />
+        </motion.button>
+        
+        <motion.button
+          whileHover={{ scale: 1.05, x: 2 }}
+          whileTap={{ scale: 0.95 }}
           type="button"
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-neutral-800 shadow-lg transition-all hover:bg-white sm:right-4 sm:h-11 sm:w-11"
+          className="absolute right-4 top-1/2 z-20 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-neutral-900"
           aria-label="Siguiente imagen"
         >
-          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+          <ChevronRight className="h-6 w-6" />
+        </motion.button>
 
-        <div className="absolute bottom-4 left-1/2 z-20 flex max-w-[90vw] -translate-x-1/2 flex-wrap justify-center gap-2">
+        {/* Paginación - Puntos */}
+        <div className="absolute bottom-6 left-1/2 z-20 flex max-w-[90vw] -translate-x-1/2 flex-wrap justify-center gap-2">
           {carouselSlides.map((_, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => setCurrent(idx)}
-              className={`h-2.5 w-2.5 rounded-full shadow-[0_0_0_1px_rgba(0,0,0,0.2)] transition-all sm:h-3 sm:w-3 ${
+              className={`h-2 rounded-full transition-all duration-300 ${
                 current === idx
-                  ? "scale-110 bg-white shadow-md ring-1 ring-black/15"
-                  : "bg-white/50 hover:bg-white/85"
+                  ? "w-6 bg-primary"
+                  : "w-2 bg-white/40 hover:bg-white/70"
               }`}
               aria-label={`Ver imagen ${idx + 1}`}
             />
           ))}
         </div>
 
-        <div className="absolute bottom-4 left-4 z-20 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
-          {current + 1} / {carouselSlides.length}
+        {/* Contador superior en esquina */}
+        <div className="absolute top-24 right-6 z-20 rounded-full bg-black/40 backdrop-blur-md px-3.5 py-1 text-xs font-semibold text-white tracking-widest border border-white/10">
+          {String(current + 1).padStart(2, "0")} / {String(carouselSlides.length).padStart(2, "0")}
         </div>
       </div>
     </section>

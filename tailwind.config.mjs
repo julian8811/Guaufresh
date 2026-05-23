@@ -6,17 +6,15 @@ export default {
     extend: {
       fontFamily: {
         /** Tipografía principal — cuerpo y UI base */
-        sans: ['Nunito', 'system-ui', 'sans-serif'],
-        primary: ['Nunito', 'system-ui', 'sans-serif'],
-        /** Tipografía secundaria — CTAs, navegación de apoyo */
-        secondary: ['Quicksand', 'system-ui', 'sans-serif'],
-        /** Misma familia secundaria (alias histórico shadcn) */
-        display: ['Quicksand', 'system-ui', 'sans-serif'],
-        /** Tipografía terciaria — titulares de sección, énfasis editorial */
-        tertiary: ['"Playfair Display"', 'Georgia', 'serif'],
-        hero: ['"Playfair Display"', 'Georgia', 'serif'],
-        /** Carrusel hero — Galano Grotesque Light Italic (+ fallback) */
-        carousel: ['"Galano Grotesque"', 'Nunito', 'system-ui', 'sans-serif'],
+        sans: ['"Montserrat"', 'sans-serif'],
+        primary: ['"Montserrat"', 'sans-serif'],
+        /** Tipografía secundaria — CTAs, títulos y marca */
+        secondary: ['"DM Serif Display"', 'serif'],
+        display: ['"DM Serif Display"', 'serif'],
+        /** Tipografía terciaria */
+        tertiary: ['"Montserrat"', 'sans-serif'],
+        hero: ['"DM Serif Display"', 'serif'],
+        carousel: ['"Montserrat"', 'sans-serif'],
       },
       colors: {
         background: 'var(--background)',

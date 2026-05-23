@@ -1,72 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
-  Jerarquía tipográfica Guau Fresh
-  — Principal: Nunito (cuerpo, UI)
-  — Secundaria: Quicksand (botones, etiquetas, apoyos)
-  — Terciaria: Playfair Display (títulos de sección, acentos editoriales)
-  — Carrusel: Galano Grotesque Light Italic (coloca el .woff2 en public/fonts/)
+  Jerarquía tipográfica Guau Fresh según Manual de Marca:
+  — Principal/Terciaria: Galano Grotesque (Fallback: Outfit / Nunito)
+  — Secundaria: MADE Dillan (Fallback: Playfair Display / Georgia)
 */
 @font-face {
   font-family: 'Galano Grotesque';
-  src:
-    url('/fonts/GalanoGrotesque-LightItalic.woff2') format('woff2'),
-    url('/fonts/GalanoGrotesque-LightItalic.woff') format('woff');
+  src: local('Galano Grotesque'), local('GalanoGrotesque-Regular');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: local('Galano Grotesque Light Italic'), local('GalanoGrotesque-LightItalic');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'MADE Dillan';
+  src: local('MADE Dillan'), local('MADEDillan-Regular'), local('MADEDillan');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
-    --font-primary: 'Nunito', system-ui, sans-serif;
-    --font-secondary: 'Quicksand', system-ui, sans-serif;
-    --font-tertiary: 'Playfair Display', Georgia, serif;
-    --font-carousel: 'Galano Grotesque', var(--font-primary);
-    --background: oklch(0.98 0.005 180);
-    --foreground: oklch(0.25 0.02 180);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.25 0.02 180);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.25 0.02 180);
-    --primary: oklch(0.65 0.15 175);
-    --primary-foreground: oklch(1 0 0);
-    --secondary: oklch(0.88 0.15 95);
-    --secondary-foreground: oklch(0.25 0.02 180);
-    --muted: oklch(0.95 0.01 180);
-    --muted-foreground: oklch(0.5 0.02 180);
-    --accent: oklch(0.88 0.15 95);
-    --accent-foreground: oklch(0.25 0.02 180);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(1 0 0);
-    --border: oklch(0.9 0.02 180);
-    --input: oklch(0.95 0.01 180);
-    --ring: oklch(0.65 0.15 175);
-    --radius: 1rem;
+    --font-primary: 'Montserrat', 'Galano Grotesque', 'Outfit', 'Nunito', system-ui, sans-serif;
+    --font-secondary: 'DM Serif Display', 'MADE Dillan', 'Playfair Display', Georgia, serif;
+    --font-tertiary: 'Montserrat', 'Galano Grotesque', 'Outfit', 'Nunito', system-ui, sans-serif;
+    --font-carousel: 'Montserrat', var(--font-primary);
+    
+    /* Colores del Manual de Marca Guaufresh */
+    --background: #FCFDFD;
+    --foreground: #2E3033; /* Neutral oscuro adaptado para contraste */
+    --card: #FFFFFF;
+    --card-foreground: #2E3033;
+    --popover: #FFFFFF;
+    --popover-foreground: #2E3033;
+    
+    --primary: #00A79F;            /* Principal Teal */
+    --primary-foreground: #FFFFFF;
+    --secondary: #35BB9B;          /* Secundario Esmeralda */
+    --secondary-foreground: #FFFFFF;
+    
+    /* Apoyos */
+    --accent: #F9F871;             /* Amarillo Pastel */
+    --accent-foreground: #2E3033;
+    
+    --muted: #F0F4F4;
+    --muted-foreground: #666666;   /* Gris medio del manual */
+    
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    
+    --border: #E0EAE9;
+    --input: #F0F4F4;
+    --ring: #00A79F;
+    --radius: 1.25rem;
   }
 
   .dark {
-    --background: oklch(0.2 0.02 180);
-    --foreground: oklch(0.95 0.01 180);
-    --card: oklch(0.25 0.02 180);
-    --card-foreground: oklch(0.95 0.01 180);
-    --popover: oklch(0.25 0.02 180);
-    --popover-foreground: oklch(0.95 0.01 180);
-    --primary: oklch(0.65 0.15 175);
-    --primary-foreground: oklch(1 0 0);
-    --secondary: oklch(0.75 0.12 95);
-    --secondary-foreground: oklch(0.2 0.02 180);
-    --muted: oklch(0.3 0.02 180);
-    --muted-foreground: oklch(0.7 0.02 180);
-    --accent: oklch(0.75 0.12 95);
-    --accent-foreground: oklch(0.2 0.02 180);
-    --destructive: oklch(0.5 0.2 25);
-    --destructive-foreground: oklch(0.95 0.01 180);
-    --border: oklch(0.35 0.02 180);
-    --input: oklch(0.3 0.02 180);
-    --ring: oklch(0.65 0.15 175);
+    --background: #0B1E1D; /* Verde azulado muy oscuro para dark mode */
+    --foreground: #E8F5F4;
+    --card: #102928;
+    --card-foreground: #E8F5F4;
+    --popover: #102928;
+    --popover-foreground: #E8F5F4;
+    
+    --primary: #00C2B9;
+    --primary-foreground: #0B1E1D;
+    --secondary: #3CD1AE;
+    --secondary-foreground: #0B1E1D;
+    
+    --accent: #F9F871;
+    --accent-foreground: #0B1E1D;
+    
+    --muted: #142C2B;
+    --muted-foreground: #8FA7A5;
+    
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    
+    --border: #1E3E3D;
+    --input: #142C2B;
+    --ring: #00C2B9;
   }
 
   * {
@@ -79,9 +106,15 @@
   }
 
   body {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
     @apply bg-background text-foreground;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+  }
+
+  h1, h2 {
+    font-family: "DM Serif Display", serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -116,3 +149,26 @@
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
+
+/* Premium UI Optimizations */
+.bg-noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.035; /* Textura sutil y elegante */
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.will-change-gpu {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.transition-spring-premium {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+

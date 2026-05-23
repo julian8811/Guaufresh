@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Check, ShoppingCart, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
@@ -24,32 +25,31 @@ const features = [
   "Aroma agradable y fresco",
   "Textura espumosa fácil de aplicar",
   "Sin necesidad de enjuague",
-  "Válvula dispensadora",
+  "Válvula dispensadora de precisión",
 ]
 
 const specs = [
-  { label: "Presentación", value: "Envase de plástico con válvula dispensadora" },
-  { label: "Vida Útil", value: "1 año" },
-  { label: "Conservación", value: "Temperatura ambiente, lugar fresco y seco" },
+  { label: "Presentación", value: "Envase biodegradable con válvula" },
+  { label: "Vida Útil", value: "1 año desde apertura" },
+  { label: "Conservación", value: "Ambiente fresco, bajo sombra" },
 ]
 
-// Fallback products for instant load
 const FALLBACK_PRODUCTS: ProductData[] = [
   {
     id: "guaufresh-50ml",
     name: "Guau Fresh - Espuma Limpiadora 50mL",
-    description: "Espuma limpiadora en seco para perros con ingredientes 100% naturales.",
+    description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Ideal para patitas y hocico.",
     price: 38000,
-    images: ["https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png"],
+    images: [baseHref("/product-foam.png")],
     stock: 100,
     category: "espuma"
   },
   {
     id: "guaufresh-150ml",
     name: "Guau Fresh - Espuma Limpiadora 150mL",
-    description: "Espuma limpiadora en seco para perros con ingredientes 100% naturales.",
+    description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Rendimiento extendido para baños completos.",
     price: 45000,
-    images: ["https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png"],
+    images: [baseHref("/product-foam.png")],
     stock: 100,
     category: "espuma"
   }
@@ -57,10 +57,11 @@ const FALLBACK_PRODUCTS: ProductData[] = [
 
 export function Product() {
   const [products, setProducts] = useState<ProductData[]>(FALLBACK_PRODUCTS)
-  const [loading, setLoading] = useState(false) // Start with false for instant render
-  const [error, setError] = useState<string | null>(null)
-  const [selectedSize, setSelectedSize] = useState<string>(FALLBACK_PRODUCTS[0]?.id || "")
-  const { addItem } = useCartStore()
+  const [loading, setLoading] = useState(false)
+  const [selectedSize, setSelectedSize] = useState<string>(FALLBACK_PRODUCTS[1]?.id || "guaufresh-150ml")
+  const [isAdding, setIsAdding] = useState(false)
+  const { addItem, setIsOpen } = useCartStore()
+  const [activeTab, setActiveTab] = useState<"ingredients" | "specs" | "usage">("ingredients")
 
   useEffect(() => {
     loadProducts()
@@ -77,174 +78,307 @@ export function Product() {
 
       if (fetchError) throw fetchError
 
-      // Only update if we got real data
       if (data && data.length > 0) {
         setProducts(data)
-        // Keep current selection if still valid
         if (!data.find(p => p.id === selectedSize)) {
-          setSelectedSize(data[0].id)
+          setSelectedSize(data[1]?.id || data[0].id)
         }
       }
     } catch (err: any) {
-      // Silently keep using fallback products - no error needed
-      console.warn('Supabase unavailable, using offline products')
+      console.warn('Supabase offline. Usando productos locales.')
     } finally {
       setLoading(false)
     }
   }
 
-  const currentProduct = products.find(p => p.id === selectedSize)
+  const currentProduct = products.find(p => p.id === selectedSize) || products[0]
 
   const handleAddToCart = () => {
     if (!currentProduct) return
+    setIsAdding(true)
     
-    addItem({
-      id: currentProduct.id,
-      name: currentProduct.name,
-      price: currentProduct.price,
-      image: currentProduct.images?.[0] || baseHref("/product-foam.png"),
-    })
-  }
-
-  if (loading) {
-    return (
-      <section id="producto" className="bg-muted py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-stretch gap-8 lg:grid-cols-5 lg:gap-8">
-            {/* Image skeleton */}
-            <div className="relative lg:col-span-2 min-h-96 lg:min-h-full rounded-2xl overflow-hidden">
-              <div className="w-full h-full bg-gray-200 animate-pulse" />
-            </div>
-            {/* Content skeleton */}
-            <div className="lg:col-span-3 space-y-4">
-              <div className="h-6 w-24 bg-gray-200 rounded animate-pulse" />
-              <div className="h-8 w-64 bg-gray-200 rounded animate-pulse" />
-              <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
-              <div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section id="producto" className="bg-muted py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 text-center">
-          <p className="text-destructive">{error}</p>
-          <Button variant="outline" className="mt-4" onClick={loadProducts}>
-            Reintentar
-          </Button>
-        </div>
-      </section>
-    )
+    setTimeout(() => {
+      addItem({
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: currentProduct.price,
+        image: baseHref("/product-foam.png"),
+      })
+      setIsAdding(false)
+      setIsOpen(true) // Abre el carrito automáticamente para mejorar la UX
+    }, 600)
   }
 
   return (
-    <section id="producto" className="bg-muted py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-stretch gap-8 lg:grid-cols-5 lg:gap-8">
-          {/* Image */}
-          <div className="relative lg:col-span-2 min-h-96 lg:min-h-full rounded-2xl overflow-hidden shadow-xl">
-            <img
-              src={currentProduct?.images?.[0] || "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_c5ruyc5ruyc5ruyc.png-DbWusuhdqUuDK8XK4BA6bwtIYMJdZ8.jpeg"}
-              alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
-              className="w-full h-full object-cover"
-            />
+    <section id="producto" className="bg-background py-20 sm:py-28 relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        
+        {/* Contenedor principal asimétrico y moderno */}
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          
+          {/* Columna Izquierda: Imagen de Producto Interactiva */}
+          <div className="lg:col-span-5 flex justify-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, type: "spring" }}
+              className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] bg-gradient-to-tr from-primary/10 via-secondary/10 to-accent/20 p-8 flex items-center justify-center border border-primary/10 shadow-md group"
+            >
+              <div className="absolute top-6 left-6 inline-flex rounded-full bg-secondary/10 border border-secondary/20 px-3.5 py-1.5 text-xs font-semibold text-primary backdrop-blur-sm">
+                Envase Ecológico
+              </div>
+
+              {/* Imagen principal animada */}
+              <motion.img
+                key={selectedSize}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                src={baseHref("/product-foam.png")}
+                alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
+                className="h-[80%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
+              />
+
+              {/* Aura de fondo */}
+              <div className="absolute -bottom-6 w-3/4 h-6 bg-[#00a79f]/10 rounded-full blur-xl group-hover:scale-105 transition-transform duration-300" />
+            </motion.div>
           </div>
 
-          {/* Content */}
-          <div className="lg:col-span-3 flex flex-col justify-between">
-            <div>
-              <span className="inline-block rounded-full bg-secondary/20 px-3 py-1 text-sm font-medium text-primary">
-                Ficha Técnica
+          {/* Columna Derecha: Detalles del Producto */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="inline-block text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary pb-1">
+                Fórmula Natural & Vegana
               </span>
-              <h2 className="mt-3 text-balance text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-                {currentProduct?.name || "Espuma Limpiadora para Perros"}
+              
+              {/* Título de Marca MADE Dillan */}
+              <h2 className="mt-4 font-secondary text-4xl sm:text-5xl font-normal leading-tight text-foreground">
+                {currentProduct?.name.split(" - ")[1] || "Espuma Limpiadora en Seco"}
               </h2>
-              <p className="mt-3 text-pretty text-base text-muted-foreground">
-                {currentProduct?.description || "Espuma limpiadora a base de extractos y proteínas de origen vegetal que limpian en seco, humecta la piel, da brillo y suavidad al pelaje de tu mascota."}
+              
+              {/* Descripción */}
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground font-medium">
+                {currentProduct?.description}
               </p>
-            </div>
+            </motion.div>
 
-            {/* Size Selection - from DB products */}
-            <div className="mt-4">
-              <p className="text-sm font-semibold text-foreground mb-2">Tamaño</p>
-              <div className="flex gap-2 flex-wrap">
+            {/* Selector de tamaños interactivo */}
+            <div className="mt-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Presentación</p>
+              <div className="flex gap-3 flex-wrap">
                 {products.map((product) => {
-                  // Extract size from product name (e.g., "50mL" or "150mL")
                   const sizeMatch = product.name.match(/(\d+m[Ll])/);
                   const sizeLabel = sizeMatch ? sizeMatch[1] : product.name;
+                  const isSelected = selectedSize === product.id;
                   
                   return (
-                    <button
+                    <motion.button
                       key={product.id}
                       onClick={() => setSelectedSize(product.id)}
-                      className={`px-3 py-2 rounded-lg border-2 transition-colors text-sm font-medium ${
-                        selectedSize === product.id
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-border bg-background text-foreground hover:border-primary/50"
+                      whileHover={{ y: -1 }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`relative px-5 py-3 rounded-2xl border-2 font-sans font-bold text-sm tracking-wide transition-all ${
+                        isSelected
+                          ? "border-primary bg-primary/5 text-primary shadow-sm"
+                          : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground"
                       }`}
                     >
                       {sizeLabel}
-                    </button>
+                      {isSelected && (
+                        <motion.span
+                          layoutId="selectedIndicator"
+                          className="absolute inset-0 border-2 border-primary rounded-2xl pointer-events-none"
+                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                        />
+                      )}
+                    </motion.button>
                   )
                 })}
               </div>
             </div>
 
-            {/* Price and Add to Cart */}
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            {/* Precio y Añadir al Carrito */}
+            <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-border pt-6">
               <div>
-                <p className="text-xs text-muted-foreground">Precio</p>
-                <p className="text-2xl font-bold text-primary">
-                  {formatPrice(currentProduct?.price || 0)}
-                </p>
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Valor Unitario</p>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={currentProduct?.price}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-3xl font-bold text-primary font-sans mt-1"
+                  >
+                    {formatPrice(currentProduct?.price || 0)}
+                  </motion.p>
+                </AnimatePresence>
               </div>
-              <Button
-                size="sm"
-                className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={handleAddToCart}
-                disabled={!currentProduct || currentProduct.stock === 0}
+
+              <div className="flex-1 min-w-[200px]">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="lg"
+                    className="w-full gap-3 bg-primary text-white hover:bg-primary/95 font-sans font-bold text-sm uppercase tracking-wider rounded-2xl h-14 shadow-lg shadow-primary/15"
+                    onClick={handleAddToCart}
+                    disabled={!currentProduct || currentProduct.stock === 0 || isAdding}
+                  >
+                    {isAdding ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+                    )}
+                    {currentProduct?.stock === 0 ? "Agotado" : isAdding ? "Agregando..." : "Agregar al Carrito"}
+                  </Button>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Características con Stagger reveal */}
+            <div className="mt-8">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Beneficios Clave</h3>
+              <motion.ul 
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: {},
+                  show: {
+                    transition: { staggerChildren: 0.05 }
+                  }
+                }}
+                className="mt-3 grid gap-2 sm:grid-cols-2 text-sm" 
+                role="list"
               >
-                <ShoppingCart className="h-4 w-4" aria-hidden="true" />
-                {currentProduct?.stock === 0 ? "Agotado" : "Agregar al Carrito"}
-              </Button>
-            </div>
-
-            {/* Features */}
-            <div className="mt-4">
-              <h3 className="text-sm font-semibold text-foreground">Características Principales</h3>
-              <ul className="mt-2 grid gap-2 sm:grid-cols-2 text-sm" role="list">
                 {features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground mt-0.5">
-                      <Check className="h-3 w-3" aria-hidden="true" />
+                  <motion.li 
+                    key={feature}
+                    variants={{
+                      hidden: { opacity: 0, x: -10 },
+                      show: { opacity: 1, x: 0 }
+                    }}
+                    className="flex items-center gap-2.5"
+                  >
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-primary">
+                      <Check className="h-3.5 w-3.5" aria-hidden="true" />
                     </span>
-                    <span className="text-muted-foreground">{feature}</span>
-                  </li>
+                    <span className="text-foreground font-medium text-[0.9rem]">{feature}</span>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
 
-            {/* Specifications */}
-            <div className="mt-4 rounded-lg bg-card p-4 shadow-sm ring-1 ring-border">
-              <h3 className="text-sm font-semibold text-card-foreground">Especificaciones</h3>
-              <dl className="mt-2 grid gap-2 grid-cols-2 text-xs">
-                {specs.map((spec) => (
-                  <div key={spec.label}>
-                    <dt className="font-medium text-muted-foreground">{spec.label}</dt>
-                    <dd className="text-foreground">{spec.value}</dd>
-                  </div>
-                ))}
-                <div>
-                  <dt className="font-medium text-muted-foreground">Contenido</dt>
-                  <dd className="text-foreground">
-                    {currentProduct?.name?.match(/(\d+m[Ll])/)?.[1] || "N/A"}
-                  </dd>
-                </div>
-              </dl>
+            {/* Tabs de Información de Producto */}
+            <div className="mt-8">
+              {/* Encabezado de Pestañas */}
+              <div className="flex border-b border-border gap-6 text-sm font-sans font-bold mb-4">
+                {[
+                  { id: "ingredients", label: "Ingredientes" },
+                  { id: "specs", label: "Especificaciones" },
+                  { id: "usage", label: "Modo de Uso" },
+                ].map((tab) => {
+                  const isActive = activeTab === tab.id
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id as any)}
+                      className={`relative pb-3 tracking-wide transition-colors duration-200 ${
+                        isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {tab.label}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTabUnderline"
+                          className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"
+                          transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                        />
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Contenido de Pestañas con AnimatePresence */}
+              <div className="min-h-[160px] rounded-3xl bg-muted/20 p-6 border border-border relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  {activeTab === "ingredients" && (
+                    <motion.div
+                      key="ingredients"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="grid gap-4 sm:grid-cols-2 text-xs font-medium text-muted-foreground"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <span className="text-foreground font-bold text-sm">Proteína de Trigo</span>
+                        <p className="leading-relaxed">Hidrata profundamente, repara la cutícula del pelaje y previene la resequedad cutánea.</p>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-foreground font-bold text-sm">Extracto de Manzanilla</span>
+                        <p className="leading-relaxed">Calma irritaciones de la piel y aporta un brillo natural al pelaje.</p>
+                      </div>
+                      <div className="flex flex-col gap-1 col-span-full border-t border-border/40 pt-3">
+                        <span className="text-foreground font-bold text-sm">Extractos de Origen Vegetal</span>
+                        <p className="leading-relaxed">Limpian suavemente eliminando la suciedad y malos olores sin afectar la dermis de tu mascota.</p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeTab === "specs" && (
+                    <motion.div
+                      key="specs"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="grid gap-4 grid-cols-2 sm:grid-cols-3 text-xs"
+                    >
+                      {specs.map((spec) => (
+                        <div key={spec.label} className="border-r border-border/60 last:border-0 pr-2">
+                          <dt className="font-semibold text-muted-foreground">{spec.label}</dt>
+                          <dd className="text-foreground font-bold mt-1 leading-tight">{spec.value}</dd>
+                        </div>
+                      ))}
+                      <div>
+                        <dt className="font-semibold text-muted-foreground">Contenido Neto</dt>
+                        <dd className="text-foreground font-bold mt-1 leading-tight">
+                          {currentProduct?.name?.match(/(\d+m[Ll])/)?.[1] || "150mL"}
+                        </dd>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeTab === "usage" && (
+                    <motion.div
+                      key="usage"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-3 text-xs text-muted-foreground font-medium"
+                    >
+                      <p className="leading-relaxed">
+                        <strong className="text-foreground">Aplicación Directa:</strong> Dosificá la espuma en la palma de tu mano o directamente sobre tu mascota y masajeá circularmente a contrapelo.
+                      </p>
+                      <p className="leading-relaxed">
+                        <strong className="text-foreground">Sin Enjuague:</strong> Remové el exceso de suciedad pasando una toalla limpia o húmeda. No necesita secadora.
+                      </p>
+                      <p className="leading-relaxed">
+                        <strong className="text-foreground">Seguridad:</strong> Producto 100% seguro y biodegradable en caso de lamido ocasional post-limpieza.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>
