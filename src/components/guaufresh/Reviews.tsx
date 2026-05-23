@@ -552,7 +552,7 @@ export function Reviews() {
         {/* Botón de acción escribir reseña */}
         <div className="mt-12 text-center">
           <p className="text-sm font-semibold text-muted-foreground">
-            ¿Ya probaste Guau Fresh? Compartí tu experiencia con nosotros
+            ¿Ya probaste Guau Fresh? Comparte tu experiencia con nosotros
           </p>
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="inline-block mt-4">
             <Button
@@ -579,7 +579,7 @@ export function Reviews() {
         <DialogContent className="max-h-[min(90vh,640px)] overflow-y-auto sm:max-w-lg rounded-3xl border-border bg-card p-6 shadow-2xl">
           <form onSubmit={handleSubmitReview}>
             <DialogHeader>
-              <DialogTitle className="font-secondary text-2xl text-foreground font-normal">Escribí tu reseña</DialogTitle>
+              <DialogTitle className="font-secondary text-2xl text-foreground font-normal">Escribe tu reseña</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground mt-1">
                 Tu opinión se publicará en esta sección para ayudar a otras familias con mascotas.
               </DialogDescription>

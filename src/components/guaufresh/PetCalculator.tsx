@@ -100,7 +100,7 @@ export function PetCalculator() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
           >
-            Calculá el Rendimiento
+            Calcula el Rendimiento
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -109,7 +109,7 @@ export function PetCalculator() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-4 text-base sm:text-lg text-muted-foreground font-medium"
           >
-            Ingresá el tamaño de tu perro y la frecuencia de uso para estimar cuánto tiempo 
+            Ingresa el tamaño de tu perro y la frecuencia de uso para estimar cuánto tiempo 
             te durará el envase y cuál será el costo por limpieza.
           </motion.p>
         </div>

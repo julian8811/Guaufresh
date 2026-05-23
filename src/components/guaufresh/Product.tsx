@@ -55,10 +55,35 @@ const FALLBACK_PRODUCTS: ProductData[] = [
   }
 ]
 
+export const PACKS_DATA = [
+  {
+    id: "guaufresh-150ml",
+    name: "Guau Fresh 150mL - Individual",
+    price: 45000,
+    desc: "1 Botella. Rinde hasta 60 limpiezas ($750 por uso).",
+    badge: null,
+  },
+  {
+    id: "guaufresh-duo-150ml",
+    name: "Guau Fresh 150mL - Pack Dúo (Ahorra 10%)",
+    price: 81000,
+    desc: "2 Botellas. Rinde hasta 120 limpiezas. ¡Envío gratis!",
+    badge: "Más Vendido",
+  },
+  {
+    id: "guaufresh-kit-150ml",
+    name: "Guau Fresh 150mL - Kit Paseo Premium",
+    price: 55000,
+    desc: "1 Botella + Toallita de microfibra premium absorbente.",
+    badge: "Recomendado",
+  }
+]
+
 export function Product() {
   const [products, setProducts] = useState<ProductData[]>(FALLBACK_PRODUCTS)
   const [loading, setLoading] = useState(false)
-  const [selectedSize, setSelectedSize] = useState<string>(FALLBACK_PRODUCTS[1]?.id || "guaufresh-150ml")
+  const [selectedSize, setSelectedSize] = useState<string>("guaufresh-150ml")
+  const [selectedPackId, setSelectedPackId] = useState<string>("guaufresh-150ml")
   const [isAdding, setIsAdding] = useState(false)
   const { addItem, setIsOpen } = useCartStore()
   const [activeTab, setActiveTab] = useState<"ingredients" | "specs" | "usage">("ingredients")
@@ -92,18 +117,30 @@ export function Product() {
   }
 
   const currentProduct = products.find(p => p.id === selectedSize) || products[0]
+  const is150ml = selectedSize === "guaufresh-150ml"
+  const activePack = PACKS_DATA.find(p => p.id === selectedPackId) || PACKS_DATA[0]
+  const displayPrice = is150ml ? activePack.price : (currentProduct?.price || 38000)
 
   const handleAddToCart = () => {
     if (!currentProduct) return
     setIsAdding(true)
     
     setTimeout(() => {
-      addItem({
-        id: currentProduct.id,
-        name: currentProduct.name,
-        price: currentProduct.price,
-        image: baseHref("/product-foam.png"),
-      })
+      if (is150ml) {
+        addItem({
+          id: activePack.id,
+          name: activePack.name,
+          price: activePack.price,
+          image: baseHref("/product-foam.png"),
+        })
+      } else {
+        addItem({
+          id: currentProduct.id,
+          name: currentProduct.name,
+          price: currentProduct.price,
+          image: baseHref("/product-foam.png"),
+        })
+      }
       setIsAdding(false)
       setIsOpen(true) // Abre el carrito automáticamente para mejorar la UX
     }, 600)
@@ -181,7 +218,12 @@ export function Product() {
                   return (
                     <motion.button
                       key={product.id}
-                      onClick={() => setSelectedSize(product.id)}
+                      onClick={() => {
+                        setSelectedSize(product.id)
+                        if (product.id === "guaufresh-150ml") {
+                          setSelectedPackId("guaufresh-150ml")
+                        }
+                      }}
                       whileHover={{ y: -1 }}
                       whileTap={{ scale: 0.97 }}
                       className={`relative px-5 py-3 rounded-2xl border-2 font-sans font-bold text-sm tracking-wide transition-all ${
@@ -204,20 +246,55 @@ export function Product() {
               </div>
             </div>
 
+            {/* Selector de packs si es 150ml */}
+            {is150ml && (
+              <div className="mt-6 border-t border-border pt-6">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Elige un Paquete (Ahorro)</p>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {PACKS_DATA.map((pack) => {
+                    const isPackSelected = selectedPackId === pack.id
+                    return (
+                      <button
+                        key={pack.id}
+                        type="button"
+                        onClick={() => setSelectedPackId(pack.id)}
+                        className={`relative flex flex-col p-4 rounded-2xl border-2 transition-all text-left items-start justify-between min-h-[110px] ${
+                          isPackSelected
+                            ? "border-primary bg-primary/5 text-primary"
+                            : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                        }`}
+                      >
+                        {pack.badge && (
+                          <span className="absolute -top-2.5 right-3 bg-secondary text-white text-[0.6rem] font-bold px-2 py-0.5 rounded-full border border-secondary/15">
+                            {pack.badge}
+                          </span>
+                        )}
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold font-sans text-foreground leading-tight">{pack.name.split(" - ")[1]}</span>
+                          <span className="text-[10px] text-muted-foreground font-medium mt-1 leading-snug">{pack.desc}</span>
+                        </div>
+                        <span className="text-xs font-bold text-primary mt-2">{formatPrice(pack.price)}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Precio y Añadir al Carrito */}
             <div className="mt-8 flex flex-wrap items-center gap-6 border-t border-border pt-6">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Valor Unitario</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Valor Total</p>
                 <AnimatePresence mode="wait">
                   <motion.p
-                    key={currentProduct?.price}
+                    key={displayPrice}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
                     className="text-3xl font-bold text-primary font-sans mt-1"
                   >
-                    {formatPrice(currentProduct?.price || 0)}
+                    {formatPrice(displayPrice)}
                   </motion.p>
                 </AnimatePresence>
               </div>

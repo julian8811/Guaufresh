@@ -25,3 +25,5 @@ out/
 
 # Windows / OneDrive alternate stream files
 *Zone.Identifier
+*.pdf
+.env*

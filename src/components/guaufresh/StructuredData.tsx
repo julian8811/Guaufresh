@@ -12,24 +12,53 @@ export function StructuredData() {
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post10_origen_vegetal-YK0v2xfT3HkGhVm0GXWdJEVUAY9tTg.png",
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post11_rutina_3pasos-M26keFJIaHf6X7ADXlETOy4ArudJSF.png"
     ],
-    description: "Espuma limpiadora en seco para perros con ingredientes 100% naturales. Limpia, humecta y da brillo al pelaje de tu mascota sin necesidad de agua. Contiene proteína de trigo hidrolizada y extractos vegetales.",
+    description: "Espuma limpiadora en seco para perros con ingredientes 100% naturales. Limpia, humecta y elimina el mal olor después del paseo sin necesidad de agua. Contiene proteína de trigo hidrolizada y extracto de manzanilla.",
     sku: "GUAUFRESH-150ML",
     brand: {
       "@type": "Brand",
       name: "Guau Fresh"
     },
-    offers: {
-      "@type": "Offer",
-      url: base,
-      priceCurrency: "COP",
-      price: "45000",
-      priceValidUntil: "2026-12-31",
-      availability: "https://schema.org/InStock",
-      seller: {
-        "@type": "Organization",
-        name: "Guau Fresh Colombia"
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Guau Fresh 150mL - Individual",
+        url: base,
+        priceCurrency: "COP",
+        price: "45000",
+        priceValidUntil: "2026-12-31",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "Organization",
+          name: "Guau Fresh Colombia"
+        }
+      },
+      {
+        "@type": "Offer",
+        name: "Guau Fresh 150mL - Pack Dúo (10% Descuento)",
+        url: base,
+        priceCurrency: "COP",
+        price: "81000",
+        priceValidUntil: "2026-12-31",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "Organization",
+          name: "Guau Fresh Colombia"
+        }
+      },
+      {
+        "@type": "Offer",
+        name: "Guau Fresh 150mL - Kit Paseo Premium (con Toalla)",
+        url: base,
+        priceCurrency: "COP",
+        price: "55000",
+        priceValidUntil: "2026-12-31",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "Organization",
+          name: "Guau Fresh Colombia"
+        }
       }
-    },
+    ],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",
@@ -113,34 +142,42 @@ export function StructuredData() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "¿Cómo se usa la espuma Guau Fresh?",
+        name: "¿Cómo reemplaza el baño tradicional?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Agita el envase, aplica la espuma sobre el pelaje seco de tu mascota, masajea suavemente y retira el exceso con una toalla. No requiere enjuague."
+          text: "Guau Fresh limpia la suciedad acumulada y elimina malos olores en segundos y sin necesidad de agua. Es el aliado perfecto para la rutina de higiene diaria o para espaciar los baños tradicionales, evitando el estrés que estos causan en muchos perros."
         }
       },
       {
         "@type": "Question",
-        name: "¿Es seguro para todo tipo de perros?",
+        name: "¿Es seguro usarlo todos los días en las patas después del paseo?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Sí, Guau Fresh está formulado con ingredientes naturales y es seguro para perros de todas las razas y edades. No contiene parabenos ni sulfatos."
+          text: "Sí, es 100% seguro. De hecho, está diseñado precisamente para limpiar y desinfectar las huellas, el pelaje y el rostro de tu perro después de salir a la calle. Su fórmula con extracto de manzanilla y proteína de trigo acondiciona las almohadillas de las patas."
         }
       },
       {
         "@type": "Question",
-        name: "¿Con qué frecuencia puedo usar Guau Fresh?",
+        name: "¿Qué hago si mi perro tiene piel sensible o alergias?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Puedes usarlo las veces que necesites entre baños completos. Es ideal para limpiezas rápidas después de paseos o cuando tu mascota necesita refrescarse."
+          text: "Nuestra espuma limpiadora es hipoalergénica y está formulada libre de parabenos, sulfatos, alcohol o siliconas que puedan irritar la dermis. Contiene manzanilla y proteína de trigo para calmar y proteger la piel sensible."
         }
       },
       {
         "@type": "Question",
-        name: "¿Hacen envíos a toda Colombia?",
+        name: "¿Se puede usar en cachorros?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Sí, realizamos envíos a toda Colombia. El envío es gratis en compras mayores a $80.000 COP."
+          text: "¡Claro que sí! Puedes utilizar la espuma limpiadora en cachorros a partir de las 8 semanas de vida. Su suavidad cuida el pelaje y la piel delicada de los más pequeños."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "¿Qué ingredientes naturales contiene?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Guau Fresh está hecho con ingredientes de origen vegetal: Proteína de Trigo Hidrolizada (que nutre y da brillo), Extracto de Manzanilla (que calma la piel) y agentes de limpieza biodegradables derivados del coco."
         }
       }
     ]

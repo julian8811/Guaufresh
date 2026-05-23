@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Droplets, Sparkles, Heart, Leaf, Clock, Shield, type LucideIcon } from "lucide-react"
 import { baseHref } from "@/lib/base-href"
+import { BeforeAfter } from "./BeforeAfter"
 
 type Benefit = {
   icon: LucideIcon
@@ -80,26 +81,59 @@ export function Benefits() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         
-        {/* Título de la sección animado */}
-        <div className="text-center max-w-3xl mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
-          >
-            Beneficios para tu mascota
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-base sm:text-lg text-muted-foreground font-medium"
-          >
-            Descubrí por qué Guau Fresh es la mejor opción para mantener a tu peludo limpio, hidratado y feliz sin el estrés del baño tradicional.
-          </motion.p>
+        {/* Cabecera y Slider integrados en una grilla de dos columnas en desktop */}
+        <div className="grid gap-12 lg:grid-cols-12 items-center mb-16">
+          {/* Texto de Cabecera */}
+          <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left max-w-xl mx-auto lg:mx-0">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 self-center lg:self-start"
+            >
+              Beneficios Clave
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground leading-[1.15]"
+            >
+              Beneficios para tu Mascota
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mt-6 text-base text-muted-foreground font-medium leading-relaxed"
+            >
+              Descubre por qué Guau Fresh es la mejor opción para mantener a tu peludo limpio, hidratado y feliz sin el estrés del baño tradicional. 
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="mt-4 text-xs font-bold text-primary uppercase tracking-wider hidden lg:block"
+            >
+              Desliza la barra del comparador a la derecha para ver el cambio instantáneo 🐾👉
+            </motion.p>
+          </div>
+
+          {/* Slider integrado */}
+          <div className="lg:col-span-7 w-full flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="w-full max-w-2xl"
+            >
+              <BeforeAfter embed={true} />
+            </motion.div>
+          </div>
         </div>
 
         {/* Grilla Bento Grid interactiva */}

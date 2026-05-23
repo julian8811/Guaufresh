@@ -16,8 +16,8 @@ type Slide = {
 const carouselSlides: Slide[] = [
   {
     src: baseHref("/carousel/hero-01.png"),
-    alt: "Gato siamés con espuma limpiadora Guau Fresh en hogar luminoso",
-    headline: "Espuma limpiadora sin aclarado",
+    alt: "Perro alegre recibiendo limpieza con espuma Guau Fresh en hogar luminoso",
+    headline: "Baño seco para perros: espuma limpiadora sin enjuague",
   },
   {
     src: baseHref("/carousel/hero-02.png"),
@@ -61,7 +61,7 @@ const carouselSlides: Slide[] = [
   },
   {
     src: baseHref("/carousel/hero-10.png"),
-    alt: "Gato e ingredientes naturales junto a Guau Fresh",
+    alt: "Ingredientes naturales de manzanilla y trigo junto a Guau Fresh",
     headline: "Guau Fresh · naturalmente",
   },
 ]

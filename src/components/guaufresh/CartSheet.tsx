@@ -44,7 +44,7 @@ export function CartSheet() {
             </AnimatePresence>
           </SheetTitle>
           <SheetDescription className="text-sm text-muted-foreground">
-            Revisá los productos agregados a tu carrito.
+            Revisa los productos agregados a tu carrito.
           </SheetDescription>
         </SheetHeader>
 
@@ -61,7 +61,7 @@ export function CartSheet() {
             <div>
               <p className="text-lg font-bold text-foreground">Tu carrito está vacío</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Agregá productos para comenzar tu compra.
+                Agrega productos para comenzar tu compra.
               </p>
             </div>
             <SheetClose asChild>
@@ -97,7 +97,7 @@ export function CartSheet() {
                 <p className="mt-2 text-[0.72rem] text-muted-foreground leading-relaxed text-center font-medium">
                   {totalPrice >= 150000
                     ? "¡Felicidades! Tu envío es 100% gratuito de regalo 🎉"
-                    : `Sumá ${formatPrice(150000 - totalPrice)} más a tu compra y te regalamos el envío.`}
+                    : `Suma ${formatPrice(150000 - totalPrice)} más a tu compra y te regalamos el envío.`}
                 </p>
               </div>
 

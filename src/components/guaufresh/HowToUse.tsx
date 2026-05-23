@@ -8,27 +8,27 @@ const steps = [
   {
     number: "01",
     title: "Agitar Antes de Usar",
-    description: "Agitá bien el envase antes de cada aplicación para asegurar una mezcla homogénea.",
+    description: "Agita bien el envase antes de cada aplicación para asegurar una mezcla homogénea.",
   },
   {
     number: "02",
     title: "Aplicar la Espuma",
-    description: "Presioná la válvula en posición vertical y dosificá la espuma directamente sobre tu peludo.",
+    description: "Presiona la válvula en posición vertical y dosifica la espuma directamente sobre tu peludo.",
   },
   {
     number: "03",
     title: "Masajear en Círculos",
-    description: "Masajeá suavemente en forma circular para distribuir el producto por todo el pelaje.",
+    description: "Masajea suavemente en forma circular para distribuir el producto por todo el pelaje.",
   },
   {
     number: "04",
     title: "Limpiar con Toalla",
-    description: "Limpiá con una toalla seca o húmeda para remover la suciedad. ¡Listo, peludo limpio y feliz!",
+    description: "Limpia con una toalla seca o húmeda para remover la suciedad. ¡Listo, peludo limpio y feliz!",
   },
 ]
 
 const precautions = [
-  "Producto de uso externo, seguro para perros y gatos de todas las edades.",
+  "Producto de uso externo, seguro para perros de todas las edades.",
   "Manténgase fuera del alcance de niños y animales domésticos sin supervisión.",
   "Evite la ingestión directa y el contacto directo con los ojos o fosas nasales.",
   "En caso de presentar alguna irritación alérgica, suspenda su uso de inmediato.",
@@ -93,7 +93,7 @@ export function HowToUse() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-4 text-base sm:text-lg text-muted-foreground font-medium text-wrap-pretty"
           >
-            Seguí estos sencillos pasos para mantener a tu compañero de cuatro patas limpio y perfumado en pocos minutos.
+            Sigue estos sencillos pasos para mantener a tu compañero de cuatro patas limpio y perfumado en pocos minutos.
           </motion.p>
         </div>
 
