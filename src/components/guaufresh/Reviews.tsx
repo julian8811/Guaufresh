@@ -238,7 +238,18 @@ export function Reviews() {
     void loadReviews()
   }, [loadReviews])
 
-  const reviewsPerPage = 3
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  const reviewsPerPage = isMobile ? 1 : 3
   const totalPages = Math.max(1, Math.ceil(reviews.length / reviewsPerPage))
 
   useEffect(() => {

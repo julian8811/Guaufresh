@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Droplets, Sparkles, Heart, Leaf, Clock, Shield, type LucideIcon } from "lucide-react"
 import { baseHref } from "@/lib/base-href"
 import { BeforeAfter } from "./BeforeAfter"
@@ -72,6 +73,26 @@ const itemVariants = {
 }
 
 export function Benefits() {
+  const [isMobile, setIsMobile] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (!isMobile) return
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % benefits.length)
+    }, 6000)
+    return () => clearInterval(interval)
+  }, [isMobile])
+
   return (
     <section id="beneficios" className="bg-muted/30 py-20 sm:py-28 relative overflow-hidden">
       
@@ -136,49 +157,112 @@ export function Benefits() {
           </div>
         </div>
 
-        {/* Grilla Bento Grid interactiva */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="mt-16 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 px-1 -mx-6 sm:-mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {benefits.map((benefit) => (
-            <motion.article
-              key={benefit.title}
-              variants={itemVariants}
-              whileHover={{ y: -8, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.15)" }}
-              className="group relative flex min-h-[280px] sm:min-h-[300px] w-[80vw] sm:w-auto shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary cursor-pointer"
-            >
-              {/* Imagen de fondo */}
-              <div
-                className="absolute inset-0 scale-105 bg-cover bg-center transition-all duration-500 ease-out opacity-[0.25] saturate-[0.6] brightness-[0.9] group-hover:scale-100 group-hover:opacity-[0.85] group-hover:saturate-100 group-hover:brightness-100"
-                style={{ backgroundImage: `url(${benefit.image})` }}
-              />
-              
-              {/* Capa degradada para contraste de texto */}
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-950/45 to-transparent transition-opacity duration-500 group-hover:from-neutral-950/70 group-hover:via-neutral-900/30" />
+        {/* Carrusel en mobile y Bento Grid en desktop */}
+        {isMobile ? (
+          <div className="mt-12 flex flex-col items-center">
+            <div className="relative w-full max-w-[340px] min-h-[300px] overflow-hidden rounded-3xl">
+              <AnimatePresence mode="wait">
+                <motion.article
+                  key={currentIndex}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="group relative flex min-h-[300px] w-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-md cursor-pointer"
+                >
+                  {/* Imagen de fondo */}
+                  <div
+                    className="absolute inset-0 scale-100 bg-cover bg-center opacity-[0.85] saturate-100 brightness-100"
+                    style={{ backgroundImage: `url(${benefits[currentIndex].image})` }}
+                  />
+                  
+                  {/* Capa degradada para contraste de texto */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-900/40 to-transparent" />
 
-              <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
-                {/* Contenedor del icono con animación en hover */}
-                <div className="mb-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white shadow-md backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white border border-white/20">
-                  <benefit.icon className="h-6 w-6 transition-transform duration-500 group-hover:rotate-12" aria-hidden />
+                  <div className="relative z-10 flex h-full flex-col justify-end p-8">
+                    {/* Contenedor del icono */}
+                    <div className="mb-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white shadow-md backdrop-blur-md border border-white/20">
+                      {(() => {
+                        const Icon = benefits[currentIndex].icon
+                        return <Icon className="h-6 w-6" aria-hidden />
+                      })()}
+                    </div>
+                    
+                    {/* Título de la tarjeta */}
+                    <h3 className="text-xl font-bold leading-snug text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-wide">
+                      {benefits[currentIndex].title}
+                    </h3>
+                    
+                    {/* Descripción de la tarjeta */}
+                    <p className="mt-2 text-sm leading-relaxed text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+                      {benefits[currentIndex].description}
+                    </p>
+                  </div>
+                </motion.article>
+              </AnimatePresence>
+            </div>
+
+            {/* Paginación - Puntos */}
+            <div className="mt-6 flex gap-2">
+              {benefits.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentIndex === idx
+                      ? "w-6 bg-primary"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  aria-label={`Ver beneficio ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {benefits.map((benefit) => (
+              <motion.article
+                key={benefit.title}
+                variants={itemVariants}
+                whileHover={{ y: -8, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.15)" }}
+                className="group relative flex min-h-[280px] sm:min-h-[300px] w-[80vw] sm:w-auto shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary cursor-pointer"
+              >
+                {/* Imagen de fondo */}
+                <div
+                  className="absolute inset-0 scale-105 bg-cover bg-center transition-all duration-500 ease-out opacity-[0.25] saturate-[0.6] brightness-[0.9] group-hover:scale-100 group-hover:opacity-[0.85] group-hover:saturate-100 group-hover:brightness-100"
+                  style={{ backgroundImage: `url(${benefit.image})` }}
+                />
+                
+                {/* Capa degradada para contraste de texto */}
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-950/45 to-transparent transition-opacity duration-500 group-hover:from-neutral-950/70 group-hover:via-neutral-900/30" />
+
+                <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-8">
+                  {/* Contenedor del icono con animación en hover */}
+                  <div className="mb-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white shadow-md backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white border border-white/20">
+                    <benefit.icon className="h-6 w-6 transition-transform duration-500 group-hover:rotate-12" aria-hidden />
+                  </div>
+                  
+                  {/* Título de la tarjeta */}
+                  <h3 className="text-xl font-bold leading-snug text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-wide">
+                    {benefit.title}
+                  </h3>
+                  
+                  {/* Descripción de la tarjeta */}
+                  <p className="mt-2 text-sm leading-relaxed text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+                    {benefit.description}
+                  </p>
                 </div>
-                
-                {/* Título de la tarjeta */}
-                <h3 className="text-xl font-bold leading-snug text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-wide">
-                  {benefit.title}
-                </h3>
-                
-                {/* Descripción de la tarjeta */}
-                <p className="mt-2 text-sm leading-relaxed text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
-                  {benefit.description}
-                </p>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
+              </motion.article>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   )
