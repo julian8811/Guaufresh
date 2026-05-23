@@ -109,7 +109,7 @@ export function HowToUse() {
             className="lg:col-span-7 relative space-y-12 pl-2 sm:pl-4"
           >
             {/* Línea conectora vertical de fondo con animación de scroll */}
-            <div className="absolute left-[2.25rem] sm:left-[2.75rem] top-10 bottom-10 w-[3px] bg-primary/10 pointer-events-none">
+            <div className="absolute left-[2.5rem] sm:left-[3.5rem] top-10 bottom-10 w-[3px] bg-primary/10 pointer-events-none">
               <motion.div
                 initial={{ scaleY: 0 }}
                 whileInView={{ scaleY: 1 }}

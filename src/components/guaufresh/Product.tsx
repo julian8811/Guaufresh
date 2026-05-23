@@ -250,7 +250,7 @@ export function Product() {
             {is150ml && (
               <div className="mt-6 border-t border-border pt-6">
                 <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Elige un Paquete (Ahorro)</p>
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="grid gap-2 grid-cols-3 sm:gap-3">
                   {PACKS_DATA.map((pack) => {
                     const isPackSelected = selectedPackId === pack.id
                     return (
@@ -258,22 +258,22 @@ export function Product() {
                         key={pack.id}
                         type="button"
                         onClick={() => setSelectedPackId(pack.id)}
-                        className={`relative flex flex-col p-4 rounded-2xl border-2 transition-all text-left items-start justify-between min-h-[110px] ${
+                        className={`relative flex flex-col p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all text-left items-start justify-between min-h-[125px] sm:min-h-[110px] ${
                           isPackSelected
                             ? "border-primary bg-primary/5 text-primary"
                             : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground"
                         }`}
                       >
                         {pack.badge && (
-                          <span className="absolute -top-2.5 right-3 bg-secondary text-white text-[0.6rem] font-bold px-2 py-0.5 rounded-full border border-secondary/15">
+                          <span className="absolute -top-2 right-1 sm:right-3 bg-secondary text-white text-[0.5rem] sm:text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full border border-secondary/15 whitespace-nowrap">
                             {pack.badge}
                           </span>
                         )}
-                        <div className="flex flex-col">
-                          <span className="text-xs font-bold font-sans text-foreground leading-tight">{pack.name.split(" - ")[1]}</span>
-                          <span className="text-[10px] text-muted-foreground font-medium mt-1 leading-snug">{pack.desc}</span>
+                        <div className="flex flex-col w-full">
+                          <span className="text-[9px] sm:text-xs font-bold font-sans text-foreground leading-tight">{pack.name.split(" - ")[1]}</span>
+                          <span className="text-[8px] sm:text-[10px] text-muted-foreground font-medium mt-1 leading-snug line-clamp-3 sm:line-clamp-none">{pack.desc}</span>
                         </div>
-                        <span className="text-xs font-bold text-primary mt-2">{formatPrice(pack.price)}</span>
+                        <span className="text-[9px] sm:text-xs font-bold text-primary mt-2">{formatPrice(pack.price)}</span>
                       </button>
                     )
                   })}

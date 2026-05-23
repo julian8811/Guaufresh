@@ -142,14 +142,14 @@ export function Benefits() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-16 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 px-1 -mx-6 sm:-mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3"
         >
           {benefits.map((benefit) => (
             <motion.article
               key={benefit.title}
               variants={itemVariants}
               whileHover={{ y: -8, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.15)" }}
-              className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary cursor-pointer"
+              className="group relative flex min-h-[280px] sm:min-h-[300px] w-[80vw] sm:w-auto shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-primary/10 bg-card shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary cursor-pointer"
             >
               {/* Imagen de fondo */}
               <div
