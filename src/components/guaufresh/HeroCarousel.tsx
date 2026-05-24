@@ -180,8 +180,8 @@ export function HeroCarousel() {
         />
 
         {/* Contenido de texto con animación Stagger */}
-        <div className="container relative z-10 mx-auto px-6 py-12 md:py-24 flex items-end md:items-center justify-start h-full">
-          <div className="w-full max-w-2xl text-left md:max-w-xl lg:max-w-2xl">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 py-12 md:py-24 flex items-end md:items-center justify-start h-full">
+          <div className="w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:max-w-xl text-left">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`text-${current}`}
@@ -195,7 +195,7 @@ export function HeroCarousel() {
                   borderColor: "rgba(255, 255, 255, 0.15)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
                 }}
-                className="bg-black/30 backdrop-blur-[3px] border border-white/5 p-6 sm:p-8 md:p-10 rounded-[2rem] rounded-tr-[5.5rem] max-w-xl shadow-xl transition-all duration-300 flex flex-col items-start gap-1 group"
+                className="bg-black/35 backdrop-blur-[3px] border border-white/5 p-5 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] rounded-tr-[4.5rem] sm:rounded-tr-[5.5rem] w-full max-w-[88vw] xs:max-w-[340px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[580px] shadow-xl transition-all duration-300 flex flex-col items-start gap-1 group"
               >
                 {/* Categoría superior */}
                 <span className="inline-block text-xs md:text-sm font-semibold uppercase tracking-widest text-primary bg-primary/10 backdrop-blur-sm px-3.5 py-1.5 rounded-full mb-3 border border-primary/20">
@@ -203,30 +203,30 @@ export function HeroCarousel() {
                 </span>
                 
                 {/* Headline con tipografía MADE Dillan (font-secondary) */}
-                <h1 className="font-secondary text-4xl sm:text-5xl md:text-6.5xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                <h1 className="font-secondary text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6.5xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
                   {slide.title}
                 </h1>
 
                 {/* Subtitle en formato de referencia */}
-                <p className="mt-4 font-sans text-lg md:text-xl text-white font-bold leading-tight drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                <p className="mt-3 sm:mt-4 font-sans text-sm xs:text-base sm:text-lg md:text-xl text-white font-bold leading-tight drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
                   {slide.subtitle1}
                 </p>
-                <p className="font-sans text-sm md:text-base text-neutral-200 italic tracking-[0.25em] font-light mt-1 lowercase drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                <p className="font-sans text-[10px] xs:text-xs sm:text-sm md:text-base text-neutral-200 italic tracking-[0.25em] font-light mt-0.5 sm:mt-1 lowercase drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
                   {slide.subtitle2}
                 </p>
 
                 {/* Precio destacado */}
-                <p className="mt-3 font-sans text-xs md:text-sm text-neutral-300 font-medium uppercase tracking-wider">
+                <p className="mt-2 sm:mt-3 font-sans text-[10px] xs:text-xs sm:text-sm text-neutral-300 font-medium uppercase tracking-wider">
                   Espuma Limpiadora 150&nbsp;mL · <span className="text-[#F9F871] font-bold">$45.000&nbsp;COP</span>
                 </p>
 
                 {/* CTAs animados */}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       type="button"
                       size="lg"
-                      className="bg-primary hover:bg-primary/95 text-white font-sans text-sm font-bold tracking-wide rounded-full px-8 py-6 shadow-lg shadow-primary/20 transition-all"
+                      className="bg-primary hover:bg-primary/95 text-white font-sans text-xs sm:text-sm font-bold tracking-wide rounded-full px-5 py-4 sm:px-8 sm:py-6 shadow-lg shadow-primary/20 transition-all h-auto"
                       onClick={handleCompraAhora}
                     >
                       Comprar ahora
@@ -238,7 +238,7 @@ export function HeroCarousel() {
                       type="button"
                       variant="outline"
                       size="lg"
-                      className="rounded-full border-white/60 text-white bg-transparent hover:text-white px-7 py-6 font-sans text-sm font-medium transition-all"
+                      className="rounded-full border-white/60 text-white bg-transparent hover:text-white px-5 py-4 sm:px-7 sm:py-6 font-sans text-xs sm:text-sm font-medium transition-all h-auto"
                       asChild
                     >
                       <a href="#producto">Ver detalles</a>
