@@ -67,7 +67,7 @@ const carouselSlides: Slide[] = [
 ]
 
 const PRODUCT = {
-  id: "guaufresh-espuma-150ml",
+  id: "guaufresh-150ml",
   name: "Guau Fresh - Espuma Limpiadora 150mL",
   price: 45000,
   image: baseHref("/product-foam-150ml.webp?v=1"),
