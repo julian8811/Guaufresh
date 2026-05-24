@@ -189,9 +189,16 @@ export function HeroCarousel() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
+                whileHover={{ 
+                  scale: 1.01, 
+                  backgroundColor: "rgba(0, 0, 0, 0.45)", 
+                  borderColor: "rgba(255, 255, 255, 0.15)",
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
+                }}
+                className="bg-black/30 backdrop-blur-[3px] border border-white/5 p-6 sm:p-8 md:p-10 rounded-[2rem] rounded-tr-[5.5rem] max-w-xl shadow-xl transition-all duration-300 flex flex-col items-start gap-1 group"
               >
                 {/* Categoría superior */}
-                <span className="inline-block text-xs md:text-sm font-semibold uppercase tracking-widest text-primary bg-primary/10 backdrop-blur-sm px-3.5 py-1.5 rounded-full mb-4 border border-primary/20">
+                <span className="inline-block text-xs md:text-sm font-semibold uppercase tracking-widest text-primary bg-primary/10 backdrop-blur-sm px-3.5 py-1.5 rounded-full mb-3 border border-primary/20">
                   Guau Fresh Cuidado Vegano
                 </span>
                 
@@ -200,15 +207,8 @@ export function HeroCarousel() {
                   {slide.title}
                 </h1>
 
-                {/* Wavy Underline */}
-                <div className="my-4 flex justify-start">
-                  <svg className="w-32 h-2 text-[#F9F871]" viewBox="0 0 100 10" preserveAspectRatio="none">
-                    <path d="M0,5 Q12.5,0 25,5 T50,5 T75,5 T100,5" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                  </svg>
-                </div>
-
                 {/* Subtitle en formato de referencia */}
-                <p className="font-sans text-lg md:text-xl text-white font-bold leading-tight drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                <p className="mt-4 font-sans text-lg md:text-xl text-white font-bold leading-tight drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
                   {slide.subtitle1}
                 </p>
                 <p className="font-sans text-sm md:text-base text-neutral-200 italic tracking-[0.25em] font-light mt-1 lowercase drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
@@ -216,7 +216,7 @@ export function HeroCarousel() {
                 </p>
 
                 {/* Precio destacado */}
-                <p className="mt-4 font-sans text-xs md:text-sm text-neutral-300 font-medium uppercase tracking-wider">
+                <p className="mt-3 font-sans text-xs md:text-sm text-neutral-300 font-medium uppercase tracking-wider">
                   Espuma Limpiadora 150&nbsp;mL · <span className="text-[#F9F871] font-bold">$45.000&nbsp;COP</span>
                 </p>
 
