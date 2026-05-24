@@ -15,52 +15,52 @@ type Slide = {
 
 const carouselSlides: Slide[] = [
   {
-    src: baseHref("/carousel/hero-01.png"),
+    src: baseHref("/carousel/hero-01.webp"),
     alt: "Perro alegre recibiendo limpieza con espuma Guau Fresh en hogar luminoso",
     headline: "Baño seco para perros: espuma limpiadora sin enjuague",
   },
   {
-    src: baseHref("/carousel/hero-02.png"),
+    src: baseHref("/carousel/hero-02.webp"),
     alt: "Perro salchicha con botella Guau Fresh sobre fondo claro",
     headline: "Limpieza suave entre baños",
   },
   {
-    src: baseHref("/carousel/hero-03.png"),
+    src: baseHref("/carousel/hero-03.webp"),
     alt: "Salchicha de pelo largo con producto y toalla Guau Fresh",
     headline: "Cuidado en casa, sin complicaciones",
   },
   {
-    src: baseHref("/carousel/hero-04.png"),
+    src: baseHref("/carousel/hero-04.webp"),
     alt: "Golden retriever en jardín con espuma limpiadora Guau Fresh",
     headline: "Brillo y frescura al aire libre",
   },
   {
-    src: baseHref("/carousel/hero-05.png"),
+    src: baseHref("/carousel/hero-05.webp"),
     alt: "Mascota y producto Guau Fresh en entorno soleado",
     headline: "Ingredientes naturales para tu peludo",
   },
   {
-    src: baseHref("/carousel/hero-06.png"),
+    src: baseHref("/carousel/hero-06.webp"),
     alt: "Espuma limpiadora Guau Fresh con ingredientes naturales sobre mármol",
     headline: "Fórmula pensada para tu mascota",
   },
   {
-    src: baseHref("/carousel/hero-07.png"),
+    src: baseHref("/carousel/hero-07.webp"),
     alt: "Bulldog francés con espuma limpiadora Guau Fresh",
     headline: "Patas y rostro, sin enjuague",
   },
   {
-    src: baseHref("/carousel/hero-08.png"),
+    src: baseHref("/carousel/hero-08.webp"),
     alt: "Bulldog francés con iluminación de estudio y Guau Fresh",
     headline: "Calidad que se nota",
   },
   {
-    src: baseHref("/carousel/hero-09.png"),
+    src: baseHref("/carousel/hero-09.webp"),
     alt: "Aplicación de espuma Guau Fresh en el pelaje al aire libre",
     headline: "Rutina fácil, resultados reales",
   },
   {
-    src: baseHref("/carousel/hero-10.png"),
+    src: baseHref("/carousel/hero-10.webp"),
     alt: "Ingredientes naturales de manzanilla y trigo junto a Guau Fresh",
     headline: "Guau Fresh · naturalmente",
   },
