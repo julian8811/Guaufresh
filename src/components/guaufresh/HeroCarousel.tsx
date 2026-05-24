@@ -10,59 +10,81 @@ import { baseHref } from "@/lib/base-href"
 type Slide = {
   src: string
   alt: string
-  headline: string
+  title: string
+  subtitle1: string
+  subtitle2: string
 }
 
 const carouselSlides: Slide[] = [
   {
     src: baseHref("/carousel/hero-01.webp?v=2"),
     alt: "Perro alegre recibiendo limpieza con espuma Guau Fresh en hogar luminoso",
-    headline: "Baño seco para perros: espuma limpiadora sin enjuague",
+    title: "Guau Fresh",
+    subtitle1: "Baño seco y espuma limpiadora",
+    subtitle2: "sin necesidad de enjuague",
   },
   {
     src: baseHref("/carousel/hero-02.webp?v=2"),
     alt: "Perro salchicha con botella Guau Fresh sobre fondo claro",
-    headline: "Limpieza suave entre baños",
+    title: "Cuidado Suave",
+    subtitle1: "Limpieza profunda entre baños",
+    subtitle2: "para tu mascota favorita",
   },
   {
     src: baseHref("/carousel/hero-03.webp?v=2"),
     alt: "Salchicha de pelo largo con producto y toalla Guau Fresh",
-    headline: "Cuidado en casa, sin complicaciones",
+    title: "Fórmula Natural",
+    subtitle1: "Protección y brillo en casa",
+    subtitle2: "sin complicaciones",
   },
   {
     src: baseHref("/carousel/hero-04.webp?v=2"),
     alt: "Golden retriever en jardín con espuma limpiadora Guau Fresh",
-    headline: "Brillo y frescura al aire libre",
+    title: "Frescura Activa",
+    subtitle1: "Ideal para paseos y aventuras",
+    subtitle2: "al aire libre",
   },
   {
     src: baseHref("/carousel/hero-05.webp?v=2"),
     alt: "Mascota y producto Guau Fresh en entorno soleado",
-    headline: "Ingredientes naturales para tu peludo",
+    title: "Ingredientes Puros",
+    subtitle1: "Proteína de trigo y manzanilla",
+    subtitle2: "de origen vegetal",
   },
   {
     src: baseHref("/carousel/hero-06.webp?v=2"),
     alt: "Espuma limpiadora Guau Fresh con ingredientes naturales sobre mármol",
-    headline: "Fórmula pensada para tu mascota",
+    title: "Piel Protegida",
+    subtitle1: "Fórmula humectante y nutritiva",
+    subtitle2: "para peludos sensibles",
   },
   {
     src: baseHref("/carousel/hero-07.webp?v=2"),
     alt: "Bulldog francés con espuma limpiadora Guau Fresh",
-    headline: "Patas y rostro, sin enjuague",
+    title: "Zonas Delicadas",
+    subtitle1: "Limpieza de patitas y hocicos",
+    subtitle2: "en pocos segundos",
   },
   {
     src: baseHref("/carousel/hero-08.webp?v=2"),
     alt: "Bulldog francés con iluminación de estudio y Guau Fresh",
-    headline: "Calidad que se nota",
+    title: "Calidad Premium",
+    subtitle1: "Resultados reales garantizados",
+    subtitle2: "por expertos en mascotas",
   },
   {
     src: baseHref("/carousel/hero-09.webp?v=2"),
     alt: "Aplicación de espuma Guau Fresh en el pelaje al aire libre",
-    headline: "Rutina fácil, resultados reales",
+    title: "Rutina Práctica",
+    subtitle1: "Cuidado higiénico diario",
+    subtitle2: "fácil y agradable",
   },
   {
     src: baseHref("/carousel/hero-10.webp?v=2"),
     alt: "Ingredientes naturales de manzanilla y trigo junto a Guau Fresh",
-    headline: "Guau Fresh · naturalmente",
+    title: "Naturalmente",
+    subtitle1: "Libre de parabenos y tóxicos",
+    subtitle2: "para consentir a tu amigo",
   },
 ]
 
@@ -174,11 +196,27 @@ export function HeroCarousel() {
                 </span>
                 
                 {/* Headline con tipografía MADE Dillan (font-secondary) */}
-                <h1 className="font-secondary text-4xl sm:text-5xl md:text-6xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
-                  {slide.headline}
+                <h1 className="font-secondary text-4xl sm:text-5xl md:text-6.5xl font-normal leading-[1.1] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                  {slide.title}
                 </h1>
-                
-                <p className="mt-4 font-sans text-base md:text-lg text-neutral-200 font-medium drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+
+                {/* Wavy Underline */}
+                <div className="my-4 flex justify-start">
+                  <svg className="w-32 h-2 text-[#F9F871]" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0,5 Q12.5,0 25,5 T50,5 T75,5 T100,5" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                  </svg>
+                </div>
+
+                {/* Subtitle en formato de referencia */}
+                <p className="font-sans text-lg md:text-xl text-white font-bold leading-tight drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                  {slide.subtitle1}
+                </p>
+                <p className="font-sans text-sm md:text-base text-neutral-200 italic tracking-[0.25em] font-light mt-1 lowercase drop-shadow-[0_1px_5px_rgba(0,0,0,0.3)]">
+                  {slide.subtitle2}
+                </p>
+
+                {/* Precio destacado */}
+                <p className="mt-4 font-sans text-xs md:text-sm text-neutral-300 font-medium uppercase tracking-wider">
                   Espuma Limpiadora 150&nbsp;mL · <span className="text-[#F9F871] font-bold">$45.000&nbsp;COP</span>
                 </p>
 
