@@ -44,7 +44,7 @@ export function CartContent() {
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                     <img
                       src={
-                        item.id.includes("150ml") 
+                        (item.id.includes("150ml") || item.name.includes("150m") || item.name.includes("150M"))
                           ? baseHref("/product-foam-150ml.webp?v=1") 
                           : baseHref("/product-foam-50ml.webp?v=1")
                       }

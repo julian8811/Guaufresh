@@ -116,7 +116,7 @@ export function CartSheet() {
                         <div className="relative h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-2xl bg-muted border border-border">
                           <img
                             src={
-                              item.id.includes("150ml") 
+                              (item.id.includes("150ml") || item.name.includes("150m") || item.name.includes("150M"))
                                 ? baseHref("/product-foam-150ml.webp?v=1") 
                                 : baseHref("/product-foam-50ml.webp?v=1")
                             }

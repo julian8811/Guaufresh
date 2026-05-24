@@ -104,12 +104,15 @@ export function Product() {
       if (fetchError) throw fetchError
 
       if (data && data.length > 0) {
-        const mappedData = data.map((product) => ({
-          ...product,
-          images: product.id.includes("150ml")
-            ? [baseHref("/product-foam-150ml.webp?v=1")]
-            : [baseHref("/product-foam-50ml.webp?v=1")]
-        }))
+        const mappedData = data.map((product) => {
+          const is150 = product.id.includes("150ml") || product.name.includes("150m") || product.name.includes("150M")
+          return {
+            ...product,
+            images: is150
+              ? [baseHref("/product-foam-150ml.webp?v=1")]
+              : [baseHref("/product-foam-50ml.webp?v=1")]
+          }
+        })
         setProducts(mappedData)
         if (!mappedData.find(p => p.id === selectedSize)) {
           setSelectedSize(mappedData[1]?.id || mappedData[0].id)
@@ -123,7 +126,7 @@ export function Product() {
   }
 
   const currentProduct = products.find(p => p.id === selectedSize) || products[0]
-  const is150ml = selectedSize === "guaufresh-150ml"
+  const is150ml = selectedSize === "guaufresh-150ml" || (currentProduct && (currentProduct.id.includes("150ml") || currentProduct.name.includes("150m") || currentProduct.name.includes("150M")))
   const activePack = PACKS_DATA.find(p => p.id === selectedPackId) || PACKS_DATA[0]
   const displayPrice = is150ml ? activePack.price : (currentProduct?.price || 38000)
 
@@ -226,7 +229,8 @@ export function Product() {
                       key={product.id}
                       onClick={() => {
                         setSelectedSize(product.id)
-                        if (product.id === "guaufresh-150ml") {
+                        const isProduct150 = product.id.includes("150ml") || product.name.includes("150m") || product.name.includes("150M")
+                        if (isProduct150) {
                           setSelectedPackId("guaufresh-150ml")
                         }
                       }}
