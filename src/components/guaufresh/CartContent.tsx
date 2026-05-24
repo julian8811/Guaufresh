@@ -43,7 +43,11 @@ export function CartContent() {
                 <div className="flex gap-4">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                     <img
-                      src={item.image}
+                      src={
+                        item.id.includes("150ml") 
+                          ? baseHref("/product-foam-150ml.webp?v=1") 
+                          : baseHref("/product-foam-50ml.webp?v=1")
+                      }
                       alt={item.name}
                       className="h-full w-full object-cover"
                     />

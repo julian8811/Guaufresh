@@ -40,7 +40,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     name: "Guau Fresh - Espuma Limpiadora 50mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Ideal para patitas y hocico.",
     price: 38000,
-    images: [baseHref("/product-foam.png")],
+    images: [baseHref("/product-foam-50ml.webp?v=1")],
     stock: 100,
     category: "espuma"
   },
@@ -104,9 +104,15 @@ export function Product() {
       if (fetchError) throw fetchError
 
       if (data && data.length > 0) {
-        setProducts(data)
-        if (!data.find(p => p.id === selectedSize)) {
-          setSelectedSize(data[1]?.id || data[0].id)
+        const mappedData = data.map((product) => ({
+          ...product,
+          images: product.id.includes("150ml")
+            ? [baseHref("/product-foam-150ml.webp?v=1")]
+            : [baseHref("/product-foam-50ml.webp?v=1")]
+        }))
+        setProducts(mappedData)
+        if (!mappedData.find(p => p.id === selectedSize)) {
+          setSelectedSize(mappedData[1]?.id || mappedData[0].id)
         }
       }
     } catch (err: any) {
@@ -138,7 +144,7 @@ export function Product() {
           id: currentProduct.id,
           name: currentProduct.name,
           price: currentProduct.price,
-          image: baseHref("/product-foam.png"),
+          image: baseHref("/product-foam-50ml.webp?v=1"),
         })
       }
       setIsAdding(false)
@@ -160,7 +166,7 @@ export function Product() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, type: "spring" }}
-              className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] bg-gradient-to-tr from-primary/10 via-secondary/10 to-accent/20 p-8 flex items-center justify-center border border-primary/10 shadow-md group"
+              className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] bg-gradient-to-tr from-primary/10 via-secondary/10 to-accent/20 p-4 sm:p-6 flex items-center justify-center border border-primary/10 shadow-md group"
             >
               <div className="absolute top-6 left-6 inline-flex rounded-full bg-secondary/10 border border-secondary/20 px-3.5 py-1.5 text-xs font-semibold text-primary backdrop-blur-sm">
                 Envase Ecológico
@@ -173,9 +179,9 @@ export function Product() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 whileHover={{ scale: 1.05, rotate: -2 }}
-                src={currentProduct?.images[0] || baseHref("/product-foam.png")}
+                src={currentProduct?.images[0] || baseHref("/product-foam-50ml.webp?v=1")}
                 alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
-                className="h-[80%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
+                className="h-[92%] sm:h-[95%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
               />
 
               {/* Aura de fondo */}

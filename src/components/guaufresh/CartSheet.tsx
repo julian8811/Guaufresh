@@ -115,7 +115,11 @@ export function CartSheet() {
                       <div className="flex gap-4 items-center">
                         <div className="relative h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-2xl bg-muted border border-border">
                           <img
-                            src={item.image}
+                            src={
+                              item.id.includes("150ml") 
+                                ? baseHref("/product-foam-150ml.webp?v=1") 
+                                : baseHref("/product-foam-50ml.webp?v=1")
+                            }
                             alt={item.name}
                             className="w-full h-full object-cover"
                           />
