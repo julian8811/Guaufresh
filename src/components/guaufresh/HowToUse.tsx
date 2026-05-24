@@ -170,7 +170,7 @@ export function HowToUse() {
             >
               <div className="rounded-[1.5rem] overflow-hidden bg-white/5 border border-white/10">
                 <img 
-                  src={baseHref("/como-usar-banner.png")} 
+                  src={baseHref("/como-usar-banner.webp?v=1")} 
                   alt="Banner instructivo - Rutina de 3 pasos de Guau Fresh" 
                   className="w-full h-auto object-cover select-none"
                   loading="lazy"
