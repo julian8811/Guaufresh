@@ -72,7 +72,9 @@ export function PetCalculator() {
         id: activeProduct.id,
         name: activeProduct.name,
         price: activeProduct.price,
-        image: baseHref("/product-foam.png"),
+        image: activeProduct.id === "guaufresh-150ml" 
+          ? baseHref("/product-foam-150ml.webp?v=1") 
+          : baseHref("/product-foam.png"),
       })
       setIsAdding(false)
       setIsOpen(true)

@@ -49,7 +49,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     name: "Guau Fresh - Espuma Limpiadora 150mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Rendimiento extendido para baños completos.",
     price: 45000,
-    images: [baseHref("/product-foam.png")],
+    images: [baseHref("/product-foam-150ml.webp?v=1")],
     stock: 100,
     category: "espuma"
   }
@@ -131,7 +131,7 @@ export function Product() {
           id: activePack.id,
           name: activePack.name,
           price: activePack.price,
-          image: baseHref("/product-foam.png"),
+          image: baseHref("/product-foam-150ml.webp?v=1"),
         })
       } else {
         addItem({
@@ -173,7 +173,7 @@ export function Product() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 whileHover={{ scale: 1.05, rotate: -2 }}
-                src={baseHref("/product-foam.png")}
+                src={currentProduct?.images[0] || baseHref("/product-foam.png")}
                 alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
                 className="h-[80%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
               />

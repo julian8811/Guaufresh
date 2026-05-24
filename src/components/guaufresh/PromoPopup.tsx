@@ -31,7 +31,7 @@ export function PromoPopup() {
       id: "guaufresh-150ml",
       name: "Espuma Limpiadora Guau Fresh 150mL",
       price: 40500,
-      image: baseHref("/product-foam.png"),
+      image: baseHref("/product-foam-150ml.webp?v=1"),
     })
     openCart(true)
     handleClose()

@@ -226,7 +226,7 @@ export function LeadSidebar() {
             {/* Product Preview */}
             <div className="mt-4 flex items-center gap-3 rounded-lg bg-muted/50 p-3">
               <img
-                src={baseHref("/product-foam.png")}
+                src={baseHref("/product-foam-150ml.webp?v=1")}
                 alt="Guau Fresh"
                 width={50}
                 height={60}

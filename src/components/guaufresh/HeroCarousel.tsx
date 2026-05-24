@@ -70,7 +70,7 @@ const PRODUCT = {
   id: "guaufresh-espuma-150ml",
   name: "Guau Fresh - Espuma Limpiadora 150mL",
   price: 45000,
-  image: baseHref("/product-foam.png"),
+  image: baseHref("/product-foam-150ml.webp?v=1"),
 }
 
 export function HeroCarousel() {
