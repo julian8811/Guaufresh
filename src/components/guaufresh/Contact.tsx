@@ -21,14 +21,14 @@ export function Contact() {
   }
 
   return (
-    <section id="contacto" className="bg-background border-t border-border py-16 sm:py-24 relative overflow-hidden">
-      {/* Círculo decorativo de fondo */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="contacto" className="bg-cream border-t border-border py-16 sm:py-24 relative overflow-hidden">
+      <div className="absolute -right-16 top-10 h-56 w-56 blob bg-primary/12 pointer-events-none" aria-hidden />
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/20 blob-alt pointer-events-none" aria-hidden />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div>
-            <h2 className="text-balance font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+            <h2 className="text-balance font-display text-4xl sm:text-5xl font-normal tracking-tight text-ink">
               ¿Listo para probar Guau Fresh?
             </h2>
             <p className="mt-4 text-pretty text-base sm:text-lg text-muted-foreground font-medium">

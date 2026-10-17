@@ -6,13 +6,13 @@ export function StructuredData() {
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "Guau Fresh - Espuma Limpiadora para Perros",
+    name: "Guau Fresh - Espuma Limpiadora para Mascotas",
     image: [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post10_origen_vegetal-YK0v2xfT3HkGhVm0GXWdJEVUAY9tTg.png",
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post11_rutina_3pasos-M26keFJIaHf6X7ADXlETOy4ArudJSF.png"
+      `${base}/product-foam-150ml.webp`,
+      `${base}/product-foam-50ml.webp`,
+      `${base}/carousel/hero-01.webp`
     ],
-    description: "Espuma limpiadora en seco para perros con ingredientes 100% naturales. Limpia, humecta y elimina el mal olor después del paseo sin necesidad de agua. Contiene proteína de trigo hidrolizada y extracto de manzanilla.",
+    description: "Espuma limpiadora en seco para perros y gatos. Vegana, libre de crueldad y de parabenos. Limpia, humecta y refresca sin necesidad de agua. Contiene proteína de trigo hidrolizada y extracto de manzanilla.",
     sku: "GUAUFRESH-150ML",
     brand: {
       "@type": "Brand",

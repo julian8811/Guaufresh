@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { motion } from "framer-motion"
 import { AlertCircle } from "lucide-react"
@@ -28,7 +28,7 @@ const steps = [
 ]
 
 const precautions = [
-  "Producto de uso externo, seguro para perros de todas las edades.",
+  "Producto de uso externo, seguro para perros y gatos de todas las edades.",
   "Manténgase fuera del alcance de niños y animales domésticos sin supervisión.",
   "Evite la ingestión directa y el contacto directo con los ojos o fosas nasales.",
   "En caso de presentar alguna irritación alérgica, suspenda su uso de inmediato.",
@@ -55,8 +55,11 @@ const stepVariants = {
 
 export function HowToUse() {
   return (
-    <section id="como-usar" className="bg-muted/10 py-20 sm:py-28 relative overflow-hidden">
+    <section id="como-usar" className="bg-primary/5 py-20 sm:py-28 relative overflow-hidden">
       
+      <div className="absolute -right-20 top-10 h-64 w-64 blob bg-primary/15 pointer-events-none" aria-hidden />
+      <div className="absolute -left-16 bottom-10 h-56 w-56 blob-alt bg-lime/25 pointer-events-none" aria-hidden />
+
       {/* Círculo decorativo de fondo animado y sutilmente respirando */}
       <motion.div 
         animate={{ 
@@ -70,7 +73,7 @@ export function HowToUse() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" 
+        className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl pointer-events-none" 
       />
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
@@ -82,7 +85,7 @@ export function HowToUse() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+            className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
           >
             Cómo usar Guau Fresh
           </motion.h2>
@@ -170,7 +173,7 @@ export function HowToUse() {
             >
               <div className="rounded-[1.5rem] overflow-hidden bg-white/5 border border-white/10">
                 <img 
-                  src={baseHref("/como-usar-banner.webp?v=1")} 
+                  src={baseHref("/como-usar-banner.webp?v=2")} 
                   alt="Banner instructivo - Rutina de 3 pasos de Guau Fresh" 
                   className="w-full h-auto object-cover select-none"
                   loading="lazy"

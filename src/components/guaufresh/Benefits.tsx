@@ -47,7 +47,7 @@ const benefits: Benefit[] = [
   {
     icon: Shield,
     title: "Seguro y Confiable",
-    description: "Producto de uso externo probado y aprobado para el cuidado de perros.",
+    description: "Producto de uso externo probado y aprobado para el cuidado de perros y gatos.",
     image: baseHref("/benefits/benefit-seguro.png"),
   },
 ]
@@ -94,11 +94,12 @@ export function Benefits() {
   }, [isMobile])
 
   return (
-    <section id="beneficios" className="bg-muted/30 py-20 sm:py-28 relative overflow-hidden">
+    <section id="beneficios" className="bg-cream py-20 sm:py-28 relative overflow-hidden">
       
-      {/* Elementos decorativos sutiles de fondo */}
-      <div className="absolute top-10 left-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
-      <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-secondary/5 blur-3xl" />
+      {/* Elementos decorativos Manual 2026 */}
+      <div className="absolute top-10 left-10 h-72 w-72 blob bg-primary/10" aria-hidden />
+      <div className="absolute bottom-10 right-10 h-72 w-72 blob-alt bg-lime/30" aria-hidden />
+      <div className="absolute top-1/3 right-1/4 h-10 w-10 rounded-full border-2 border-primary/25" aria-hidden />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         
@@ -119,9 +120,9 @@ export function Benefits() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground leading-[1.15]"
+              className="mt-4 font-display text-4xl sm:text-5xl font-normal tracking-tight text-ink leading-[1.15]"
             >
-              Beneficios para tu Mascota
+              Beneficios para tu mascota
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -130,7 +131,7 @@ export function Benefits() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="mt-6 text-base text-muted-foreground font-medium leading-relaxed"
             >
-              Descubre por qué Guau Fresh es la mejor opción para mantener a tu peludo limpio, hidratado y feliz sin el estrés del baño tradicional. 
+              Frescura, limpieza y bienestar en segundos. Cuidado práctico para perros y gatos, sin agua y sin estrés. 
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}

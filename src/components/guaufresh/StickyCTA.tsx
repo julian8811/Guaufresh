@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -12,7 +12,7 @@ const PRODUCT = {
   id: "guaufresh-50ml", // default quick buy or we can add 150ml
   name: "Guau Fresh - Espuma Limpiadora 150mL",
   price: 45000,
-  image: baseHref("/product-foam-150ml.webp?v=1"),
+  image: baseHref("/product-foam-150ml.webp?v=2"),
 }
 
 export function StickyCTA() {
@@ -42,7 +42,7 @@ export function StickyCTA() {
       id: "guaufresh-150ml",
       name: "Guau Fresh - Espuma Limpiadora 150mL",
       price: 45000,
-      image: baseHref("/product-foam-150ml.webp?v=1"),
+      image: baseHref("/product-foam-150ml.webp?v=2"),
     })
     setIsOpen(true)
   }
@@ -60,7 +60,7 @@ export function StickyCTA() {
           {/* Info Producto */}
           <div className="flex items-center gap-2">
             <img
-              src={baseHref("/product-foam-150ml.webp?v=1")}
+              src={baseHref("/product-foam-150ml.webp?v=2")}
               alt="Guau Fresh"
               className="h-9 w-auto object-contain rounded-md"
             />

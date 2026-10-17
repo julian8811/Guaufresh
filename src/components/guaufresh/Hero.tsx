@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Sparkles } from "lucide-react"
+import { baseHref } from "@/lib/base-href"
 
 export function Hero() {
   return (
@@ -76,8 +77,8 @@ export function Hero() {
               {/* Decorative circle behind product */}
               <div className="absolute -inset-4 rounded-full bg-secondary/30" aria-hidden="true" />
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png"
-                alt="Espuma limpiadora Guau Fresh - Botella de 150mL con válvula dispensadora"
+                src={baseHref("/product-foam-150ml.webp?v=2")}
+                alt="Espuma limpiadora Guau Fresh - Botella de 150mL para mascotas"
                 width={400}
                 height={500}
                 className="relative z-10 h-auto w-full max-w-sm drop-shadow-2xl"

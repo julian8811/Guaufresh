@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -73,8 +73,8 @@ export function PetCalculator() {
         name: activeProduct.name,
         price: activeProduct.price,
         image: activeProduct.id === "guaufresh-150ml" 
-          ? baseHref("/product-foam-150ml.webp?v=1") 
-          : baseHref("/product-foam-50ml.webp?v=1"),
+          ? baseHref("/product-foam-150ml.webp?v=2") 
+          : baseHref("/product-foam-50ml.webp?v=2"),
       })
       setIsAdding(false)
       setIsOpen(true)
@@ -100,7 +100,7 @@ export function PetCalculator() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+            className="mt-4 font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
           >
             Calcula el Rendimiento
           </motion.h2>

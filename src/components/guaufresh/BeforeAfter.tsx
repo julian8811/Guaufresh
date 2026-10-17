@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -83,7 +83,7 @@ export function BeforeAfter({ embed = false }: { embed?: boolean }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+            className="mt-4 font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
           >
             Efecto Guau: Limpieza Real
           </motion.h2>

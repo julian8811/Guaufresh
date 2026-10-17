@@ -15,26 +15,42 @@ const legalLinks = [
   { href: baseHref("/tratamiento-de-datos"), label: "Tratamiento de datos (Ley 1581)" },
 ]
 
+function PawIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <ellipse cx="12" cy="15.5" rx="5.2" ry="4.2" />
+      <ellipse cx="6.2" cy="9.2" rx="2.2" ry="2.6" />
+      <ellipse cx="17.8" cy="9.2" rx="2.2" ry="2.6" />
+      <ellipse cx="8.8" cy="5.8" rx="1.9" ry="2.3" />
+      <ellipse cx="15.2" cy="5.8" rx="1.9" ry="2.3" />
+    </svg>
+  )
+}
+
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-background text-foreground border-t border-border">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <footer className="relative overflow-hidden bg-primary text-primary-foreground">
+      <div className="pointer-events-none absolute -right-16 -top-10 h-56 w-56 blob bg-secondary/40" aria-hidden />
+      <div className="pointer-events-none absolute -left-20 bottom-0 h-48 w-48 blob-alt bg-lime/25" aria-hidden />
+      <div className="pointer-events-none absolute right-1/3 top-8 h-16 w-16 rounded-full border-2 border-white/20" aria-hidden />
+
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
           <div className="flex flex-col items-center gap-4 lg:items-start">
-            <a href={baseHref('/')} className="flex items-center">
+            <a href={baseHref("/")} className="flex items-center">
               <img
-                src={baseHref('/logo-guaufresh.png')}
-                alt="Guau Fresh Logo"
-                width={400}
+                src={baseHref("/logo-guaufresh-white.png?v=2")}
+                alt="Guau Fresh"
+                width={160}
                 height={160}
-                className="h-[5.5rem] w-auto max-w-[min(100%,400px)] object-contain sm:h-24 md:h-28 lg:h-32"
+                className="h-20 w-auto max-w-[180px] object-contain sm:h-24"
                 decoding="async"
               />
             </a>
-            <p className="max-w-xs text-center text-sm text-muted-foreground lg:text-left font-medium">
-              Espuma limpiadora para perros con ingredientes naturales. Cuida a tu peludo con amor.
+            <p className="max-w-xs text-center text-sm text-primary-foreground/85 lg:text-left font-semibold">
+              Espuma limpiadora para mascotas. Frescura, limpieza y bienestar en segundos.
             </p>
           </div>
 
@@ -43,7 +59,7 @@ export function Footer() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary font-medium"
+                className="text-sm text-primary-foreground/80 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent font-bold"
               >
                 {link.label}
               </a>
@@ -51,77 +67,51 @@ export function Footer() {
           </nav>
         </div>
 
+        <div className="paw-divider my-8 text-accent">
+          <PawIcon className="paw-divider-icon" />
+        </div>
+
         <nav
-          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-border pt-6"
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
           aria-label="Información legal"
         >
           {legalLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-sm font-medium"
+              className="text-xs text-primary-foreground/70 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:text-sm font-semibold"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="mt-6 border-t border-border pt-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <p className="text-center text-sm text-muted-foreground font-medium order-2 sm:order-1">
+        <div className="mt-8 border-t border-white/20 pt-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <p className="text-center text-sm text-primary-foreground/75 font-semibold order-2 sm:order-1">
             © {currentYear} Guau Fresh. Todos los derechos reservados.
           </p>
-          
-          {/* Métodos de Pago */}
-          <div className="flex flex-wrap items-center justify-center gap-5 text-muted-foreground/35 order-1 sm:order-2" aria-label="Métodos de pago aceptados">
-            {/* Visa */}
-            <img 
-              src={baseHref('/payments/visa.png')} 
-              alt="Visa" 
-              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* Mastercard */}
-            <img 
-              src={baseHref('/payments/mastercard.png')} 
-              alt="Mastercard" 
-              className="h-5 sm:h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* American Express */}
-            <img 
-              src={baseHref('/payments/american-express.png')} 
-              alt="American Express" 
-              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* PSE */}
-            <img 
-              src={baseHref('/payments/pse.png')} 
-              alt="PSE" 
-              className="h-5 sm:h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* Nequi */}
-            <img 
-              src={baseHref('/payments/nequi.png')} 
-              alt="Nequi" 
-              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* Daviplata */}
-            <img 
-              src={baseHref('/payments/daviplata.png')} 
-              alt="Daviplata" 
-              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
-            {/* Efecty */}
-            <img 
-              src={baseHref('/payments/efecty.png')} 
-              alt="Efecty" 
-              className="h-4 sm:h-5 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" 
-              loading="lazy"
-            />
+
+          <div
+            className="flex flex-wrap items-center justify-center gap-5 order-1 sm:order-2"
+            aria-label="Métodos de pago aceptados"
+          >
+            {[
+              ["visa.png", "Visa", "h-4 sm:h-5"],
+              ["mastercard.png", "Mastercard", "h-5 sm:h-6"],
+              ["american-express.png", "American Express", "h-4 sm:h-5"],
+              ["pse.png", "PSE", "h-5 sm:h-6"],
+              ["nequi.png", "Nequi", "h-4 sm:h-5"],
+              ["daviplata.png", "Daviplata", "h-4 sm:h-5"],
+              ["efecty.png", "Efecty", "h-4 sm:h-5"],
+            ].map(([file, alt, cls]) => (
+              <img
+                key={file}
+                src={baseHref(`/payments/${file}`)}
+                alt={alt}
+                className={`${cls} w-auto object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity`}
+                loading="lazy"
+              />
+            ))}
           </div>
         </div>
       </div>
