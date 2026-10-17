@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useCallback, useRef } from "react"
+import { motion, AnimatePresence, type PanInfo } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
 import { baseHref } from "@/lib/base-href"
+import { PawIcon } from "@/components/guaufresh/PawIcon"
 
 type Slide = {
   src: string
@@ -95,156 +96,157 @@ const PRODUCT = {
   image: baseHref("/product-foam-150ml.webp?v=2"),
 }
 
-function PawIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <ellipse cx="12" cy="15.5" rx="5.2" ry="4.2" />
-      <ellipse cx="6.2" cy="9.2" rx="2.2" ry="2.6" />
-      <ellipse cx="17.8" cy="9.2" rx="2.2" ry="2.6" />
-      <ellipse cx="8.8" cy="5.8" rx="1.9" ry="2.3" />
-      <ellipse cx="15.2" cy="5.8" rx="1.9" ry="2.3" />
-    </svg>
-  )
-}
+const SWIPE_THRESHOLD = 60
 
 export function HeroCarousel() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
   const { addItem } = useCartStore()
   const slide = carouselSlides[current]
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setDirection(1)
     setCurrent((prev) => (prev + 1) % carouselSlides.length)
-  }
+  }, [])
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setDirection(-1)
     setCurrent((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length)
+  }, [])
+
+  const goTo = (idx: number) => {
+    setDirection(idx > current ? 1 : -1)
+    setCurrent(idx)
   }
 
   useEffect(() => {
-    const id = setInterval(() => {
-      nextSlide()
-    }, 8000)
+    if (paused) return
+    const id = setInterval(nextSlide, 8000)
     return () => clearInterval(id)
-  }, [])
+  }, [paused, nextSlide])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!sectionRef.current?.contains(document.activeElement) && document.activeElement !== sectionRef.current) {
+        return
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault()
+        nextSlide()
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault()
+        prevSlide()
+      }
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [nextSlide, prevSlide])
+
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    if (info.offset.x < -SWIPE_THRESHOLD || info.velocity.x < -500) {
+      nextSlide()
+    } else if (info.offset.x > SWIPE_THRESHOLD || info.velocity.x > 500) {
+      prevSlide()
+    }
+  }
 
   const handleCompraAhora = () => {
     addItem(PRODUCT)
   }
 
   const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+    enter: (dir: number) => ({
+      x: dir > 0 ? 280 : -280,
       opacity: 0,
-      scale: 1.05,
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      scale: 1,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.5 },
-        scale: { duration: 0.6 },
+        x: { type: "spring", stiffness: 320, damping: 32 },
+        opacity: { duration: 0.35 },
       },
     },
-    exit: (direction: number) => ({
+    exit: (dir: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 300 : -300,
+      x: dir < 0 ? 280 : -280,
       opacity: 0,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.4 },
+        x: { type: "spring", stiffness: 320, damping: 32 },
+        opacity: { duration: 0.3 },
       },
     }),
   }
 
   return (
-    <section id="inicio" className="relative w-full overflow-hidden bg-cream">
+    <section
+      id="inicio"
+      ref={sectionRef}
+      tabIndex={0}
+      aria-roledescription="carrusel"
+      aria-label="Carrusel Guau Fresh"
+      className="relative w-full overflow-hidden bg-cream outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setPaused(false)
+        }
+      }}
+    >
       <div className="pointer-events-none absolute -right-24 -top-16 h-72 w-72 blob bg-primary/25 blur-sm" aria-hidden />
       <div className="pointer-events-none absolute -left-20 bottom-10 h-56 w-56 blob-alt bg-lime/40 blur-sm" aria-hidden />
 
-      <div className="relative w-full flex flex-col md:flex-row md:items-center md:min-h-[85vh] lg:min-h-[90vh]">
-        <div className="relative aspect-square w-full overflow-hidden bg-cream md:absolute md:inset-0 md:aspect-auto">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={`slide-${current}`}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="absolute inset-0"
-            >
-              <img
-                src={slide.src}
-                alt=""
-                aria-hidden
-                className="absolute inset-0 hidden h-full w-full scale-110 object-cover blur-2xl opacity-60 md:block"
-                decoding="async"
-              />
-              <img
-                src={slide.src}
-                alt={slide.alt}
-                className="absolute inset-0 h-full w-full object-contain object-center md:object-right"
-                decoding="async"
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div
-          className="pointer-events-none absolute inset-0 hidden md:block bg-gradient-to-r from-cream/70 via-cream/20 to-transparent"
-          aria-hidden
-        />
-
-        <div className="container relative z-10 mx-auto -mt-6 px-4 pb-16 sm:px-6 md:mt-0 md:py-24 flex items-end md:items-center justify-start h-full">
-          <div className="w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:max-w-xl text-left">
+      <div className="container relative z-10 mx-auto px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
+        <div className="grid items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+          {/* Copy card */}
+          <div className="order-2 w-full max-w-xl lg:order-1">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`text-${current}`}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative bg-cream/95 backdrop-blur-md border border-primary/20 p-5 sm:p-8 md:p-10 rounded-[1.5rem] sm:rounded-[2rem] rounded-tr-[4.5rem] sm:rounded-tr-[5.5rem] w-full max-w-[88vw] xs:max-w-[340px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[580px] shadow-xl flex flex-col items-start gap-1"
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative flex w-full flex-col items-start gap-1 rounded-[1.5rem] border border-primary/20 bg-card/95 p-5 shadow-xl backdrop-blur-md sm:rounded-[2rem] sm:rounded-tr-[5.5rem] sm:p-8 md:p-10"
               >
                 <div className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 blob bg-primary/20" aria-hidden />
 
-                <span className="inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest text-primary bg-primary/10 px-3.5 py-1.5 rounded-full mb-3 border border-primary/20">
-                  <PawIcon className="h-3.5 w-3.5 text-accent" />
+                <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-primary md:text-sm">
+                  <PawIcon className="h-4 w-4 text-accent" />
                   Cuidado vegano para mascotas
                 </span>
 
-                <h1 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-ink tracking-tight">
+                <h1 className="font-display text-3xl font-normal leading-[1.1] tracking-tight text-ink sm:text-4xl md:text-5xl lg:text-6xl">
                   {slide.title}
                 </h1>
 
-                <div className="paw-divider my-2 max-w-[10rem] ml-0 mr-auto text-accent">
+                <div className="paw-divider my-2 ml-0 mr-auto max-w-[10rem] text-accent">
                   <PawIcon className="paw-divider-icon" />
                 </div>
 
-                <p className="mt-1 font-sans text-sm xs:text-base sm:text-lg md:text-xl text-ink font-bold leading-tight">
+                <p className="mt-1 font-sans text-base font-bold leading-tight text-ink sm:text-lg md:text-xl">
                   {slide.subtitle1}
                 </p>
-                <p className="font-sans text-[10px] xs:text-xs sm:text-sm md:text-base text-muted-foreground italic tracking-[0.2em] font-semibold mt-0.5 lowercase">
+                <p className="mt-0.5 font-sans text-xs font-semibold lowercase italic tracking-[0.2em] text-muted-foreground sm:text-sm md:text-base">
                   {slide.subtitle2}
                 </p>
 
-                <p className="mt-2 sm:mt-3 font-sans text-[10px] xs:text-xs sm:text-sm text-muted-foreground font-bold uppercase tracking-wider">
+                <p className="mt-2 font-sans text-xs font-bold uppercase tracking-wider text-muted-foreground sm:mt-3 sm:text-sm">
                   Espuma Limpiadora 150&nbsp;mL ·{" "}
-                  <span className="text-primary font-extrabold">$45.000&nbsp;COP</span>
+                  <span className="font-extrabold text-primary">$45.000&nbsp;COP</span>
                 </p>
 
-                <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+                <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4">
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       type="button"
                       size="lg"
-                      className="bg-primary hover:bg-primary/95 text-white font-sans text-xs sm:text-sm font-bold tracking-wide rounded-full px-5 py-4 sm:px-8 sm:py-6 shadow-lg shadow-primary/25 transition-all h-auto"
+                      className="h-auto rounded-full bg-primary px-5 py-4 font-sans text-xs font-bold tracking-wide text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary/95 sm:px-8 sm:py-6 sm:text-sm"
                       onClick={handleCompraAhora}
                     >
                       Comprar ahora
@@ -256,7 +258,7 @@ export function HeroCarousel() {
                       type="button"
                       variant="outline"
                       size="lg"
-                      className="rounded-full border-primary/40 text-ink bg-card hover:bg-primary/5 hover:text-ink px-5 py-4 sm:px-7 sm:py-6 font-sans text-xs sm:text-sm font-bold transition-all h-auto"
+                      className="h-auto rounded-full border-primary/40 bg-card px-5 py-4 font-sans text-xs font-bold text-ink transition-all hover:bg-primary/5 hover:text-ink sm:px-7 sm:py-6 sm:text-sm"
                       asChild
                     >
                       <a href="#producto">Ver detalles</a>
@@ -266,46 +268,71 @@ export function HeroCarousel() {
               </motion.div>
             </AnimatePresence>
           </div>
+
+          {/* Photo frame — height driven by square aspect, no crop */}
+          <div className="relative order-1 w-full lg:order-2">
+            <div className="relative mx-auto aspect-square w-full max-w-xl overflow-hidden rounded-[2rem] border border-primary/15 bg-cream shadow-lg sm:rounded-[2.5rem] lg:max-w-none">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.img
+                  key={`slide-${current}`}
+                  src={slide.src}
+                  alt={slide.alt}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.18}
+                  onDragEnd={handleDragEnd}
+                  className="absolute inset-0 h-full w-full cursor-grab object-contain object-center active:cursor-grabbing"
+                  decoding="async"
+                  draggable={false}
+                />
+              </AnimatePresence>
+
+              <div className="absolute right-3 top-3 z-20 rounded-full border border-primary/20 bg-cream/90 px-3 py-1 text-xs font-bold tracking-widest text-ink backdrop-blur-md">
+                {String(current + 1).padStart(2, "0")} / {String(carouselSlides.length).padStart(2, "0")}
+              </div>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.05, x: -2 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={prevSlide}
+              className="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-cream/95 text-ink shadow-md backdrop-blur-md transition-all hover:bg-primary hover:text-white md:left-0 md:-translate-x-1/2"
+              aria-label="Imagen anterior"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, x: 2 }}
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={nextSlide}
+              className="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-cream/95 text-ink shadow-md backdrop-blur-md transition-all hover:bg-primary hover:text-white md:right-0 md:translate-x-1/2"
+              aria-label="Siguiente imagen"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </motion.button>
+          </div>
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05, x: -2 }}
-          whileTap={{ scale: 0.95 }}
-          type="button"
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 z-20 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-cream/90 text-ink backdrop-blur-md transition-all hover:bg-primary hover:text-white"
-          aria-label="Imagen anterior"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05, x: 2 }}
-          whileTap={{ scale: 0.95 }}
-          type="button"
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 z-20 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-cream/90 text-ink backdrop-blur-md transition-all hover:bg-primary hover:text-white"
-          aria-label="Siguiente imagen"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </motion.button>
-
-        <div className="absolute bottom-6 left-1/2 z-20 flex max-w-[90vw] -translate-x-1/2 flex-wrap justify-center gap-2">
+        <div className="mt-8 flex max-w-full flex-wrap justify-center gap-2">
           {carouselSlides.map((_, idx) => (
             <button
               key={idx}
               type="button"
-              onClick={() => setCurrent(idx)}
+              onClick={() => goTo(idx)}
               className={`h-2 rounded-full transition-all duration-300 ${
                 current === idx ? "w-6 bg-primary" : "w-2 bg-ink/25 hover:bg-ink/50"
               }`}
               aria-label={`Ver imagen ${idx + 1}`}
+              aria-current={current === idx ? "true" : undefined}
             />
           ))}
-        </div>
-
-        <div className="absolute top-24 right-6 z-20 rounded-full bg-cream/90 backdrop-blur-md px-3.5 py-1 text-xs font-bold text-ink tracking-widest border border-primary/20">
-          {String(current + 1).padStart(2, "0")} / {String(carouselSlides.length).padStart(2, "0")}
         </div>
       </div>
     </section>

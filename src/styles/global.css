@@ -200,6 +200,9 @@
   .paw-divider-icon {
     width: 1.25rem;
     height: 1.25rem;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    aspect-ratio: 1 / 1;
     flex-shrink: 0;
   }
 
