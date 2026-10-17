@@ -13,9 +13,19 @@ function normalizeBase(path) {
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const env = loadEnv(mode, process.cwd(), '');
 
+function resolveSite(raw) {
+  const fallback = 'https://guaufresh.vercel.app';
+  const value = (raw || fallback).trim();
+  try {
+    return new URL(value).origin;
+  } catch {
+    return fallback;
+  }
+}
+
 export default defineConfig({
-  site: env.PUBLIC_SITE_URL || undefined,
-  base: normalizeBase(env.PUBLIC_BASE_PATH || '/'),
+  site: resolveSite(env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL),
+  base: normalizeBase(env.PUBLIC_BASE_PATH || process.env.PUBLIC_BASE_PATH || '/'),
   integrations: [react(), tailwind()],
   output: 'static',
   build: {
