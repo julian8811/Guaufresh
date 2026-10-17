@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, ShoppingCart, Loader2, Rabbit, FlaskConicalOff, Leaf } from "lucide-react"
+import { Check, ShoppingCart, Loader2, Rabbit, FlaskConicalOff, Leaf, Expand } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
 import { formatPrice } from "@/lib/utils"
 import { supabase } from "@/lib/supabase"
 import { baseHref } from "@/lib/base-href"
+import { ImageLightbox } from "@/components/guaufresh/ImageLightbox"
 
 interface ProductData {
   id: string
@@ -85,6 +86,7 @@ export function Product() {
   const [selectedSize, setSelectedSize] = useState<string>("guaufresh-150ml")
   const [selectedPackId, setSelectedPackId] = useState<string>("guaufresh-150ml")
   const [isAdding, setIsAdding] = useState(false)
+  const [zoomOpen, setZoomOpen] = useState(false)
   const { addItem, setIsOpen } = useCartStore()
   const [activeTab, setActiveTab] = useState<"ingredients" | "specs" | "usage">("ingredients")
 
@@ -179,17 +181,27 @@ export function Product() {
                 Para mascotas
               </div>
 
-              {/* Imagen principal animada */}
-              <motion.img
-                key={selectedSize}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                src={currentProduct?.images[0] || baseHref("/product-foam-50ml.webp?v=2")}
-                alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
-                className="relative z-10 h-[92%] sm:h-[95%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
-              />
+              {/* Imagen principal animada — clic para ampliar */}
+              <button
+                type="button"
+                onClick={() => setZoomOpen(true)}
+                className="relative z-10 flex h-full w-full items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Ampliar imagen del producto"
+              >
+                <motion.img
+                  key={selectedSize}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  whileHover={{ scale: 1.05, rotate: -2 }}
+                  src={currentProduct?.images[0] || baseHref("/product-foam-50ml.webp?v=2")}
+                  alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
+                  className="h-[92%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all will-change-gpu sm:h-[95%]"
+                />
+                <span className="pointer-events-none absolute bottom-8 right-6 flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-card/95 text-primary opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
+                  <Expand className="h-4 w-4" aria-hidden />
+                </span>
+              </button>
 
               {/* Aura de fondo */}
               <div className="absolute -bottom-6 w-3/4 h-6 bg-[#00a79f]/10 rounded-full blur-xl group-hover:scale-105 transition-transform duration-300" />
@@ -493,6 +505,18 @@ export function Product() {
           </div>
         </div>
       </div>
+
+      <ImageLightbox
+        items={[
+          {
+            src: currentProduct?.images[0] || baseHref("/product-foam-150ml.webp?v=2"),
+            alt: currentProduct?.name || "Guau Fresh Espuma Limpiadora",
+          },
+        ]}
+        index={zoomOpen ? 0 : null}
+        onClose={() => setZoomOpen(false)}
+        onNavigate={() => {}}
+      />
     </section>
   )
 }

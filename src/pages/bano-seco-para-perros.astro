@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { Header } from '@/components/guaufresh/Header';
 import { HeroCarousel } from '@/components/guaufresh/HeroCarousel';
 import { Benefits } from '@/components/guaufresh/Benefits';
+import { Gallery } from '@/components/guaufresh/Gallery';
 import { Product } from '@/components/guaufresh/Product';
 import { PetCalculator } from '@/components/guaufresh/PetCalculator';
 import { HowToUse } from '@/components/guaufresh/HowToUse';
@@ -33,6 +34,7 @@ import { BubbleEffect } from '@/components/guaufresh/BubbleEffect';
     <main id="main-content" class="relative z-10">
       <HeroCarousel client:load />
       <Benefits client:visible />
+      <Gallery client:visible />
       <Product client:visible />
       <PetCalculator client:visible />
       <HowToUse client:visible />

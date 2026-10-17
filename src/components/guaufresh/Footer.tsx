@@ -1,9 +1,11 @@
 import { baseHref } from "@/lib/base-href"
+import { PawIcon } from "@/components/guaufresh/PawIcon"
 
 const footerLinks = [
   { href: "#inicio", label: "Inicio" },
   { href: "#producto", label: "Producto" },
   { href: "#beneficios", label: "Beneficios" },
+  { href: "#galeria", label: "Galería" },
   { href: "#reseñas", label: "Reseñas" },
   { href: "#como-usar", label: "Cómo usar" },
   { href: "#contacto", label: "Contacto" },
@@ -14,18 +16,6 @@ const legalLinks = [
   { href: baseHref("/privacidad"), label: "Privacidad" },
   { href: baseHref("/tratamiento-de-datos"), label: "Tratamiento de datos (Ley 1581)" },
 ]
-
-function PawIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <ellipse cx="12" cy="15.5" rx="5.2" ry="4.2" />
-      <ellipse cx="6.2" cy="9.2" rx="2.2" ry="2.6" />
-      <ellipse cx="17.8" cy="9.2" rx="2.2" ry="2.6" />
-      <ellipse cx="8.8" cy="5.8" rx="1.9" ry="2.3" />
-      <ellipse cx="15.2" cy="5.8" rx="1.9" ry="2.3" />
-    </svg>
-  )
-}
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
