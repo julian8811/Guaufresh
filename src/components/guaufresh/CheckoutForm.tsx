@@ -263,7 +263,7 @@ Notas: ${orderData.notes || 'Sin notas'}`
                   type="text" 
                   required 
                   className="mt-2" 
-                  placeholder="Carrera 1 # 2-3, Bogotá"
+                  placeholder="Carrera 1 # 2-3, Medellín"
                   value={formData.address}
                   onChange={handleInputChange}
                 />

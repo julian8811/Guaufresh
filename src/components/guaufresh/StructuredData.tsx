@@ -137,8 +137,8 @@ export function StructuredData() {
     telephone: "+57-XXX-XXX-XXXX",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Bogotá",
-      addressRegion: "Cundinamarca",
+      addressLocality: "Medellín",
+      addressRegion: "Antioquia",
       addressCountry: "CO"
     },
     geo: {

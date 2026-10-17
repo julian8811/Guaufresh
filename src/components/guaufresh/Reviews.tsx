@@ -56,7 +56,7 @@ const seedReviews: Review[] = [
   {
     id: "seed-1",
     name: "María Fernández",
-    location: "Bogotá",
+    location: "Medellín",
     petImage: PET_IMAGES.luna,
     rating: 5,
     date: "Hace 2 semanas",
@@ -618,7 +618,7 @@ export function Reviews() {
                   id="review-location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Ej. Bogotá"
+                  placeholder="Ej. Medellín"
                   maxLength={80}
                   className="rounded-xl border-border bg-muted/20"
                 />
