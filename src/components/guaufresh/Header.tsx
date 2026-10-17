@@ -39,12 +39,12 @@ export function Header() {
       <motion.div
         animate={{
           y: 0,
-          borderRadius: isScrolled ? "9999px" : "0px",
-          backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 1)",
-          boxShadow: isScrolled 
-            ? "0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.03)" 
-            : "0 1px 0 0 rgba(0,0,0,0.02)",
-          borderColor: isScrolled ? "rgba(0, 167, 159, 0.15)" : "rgba(0, 0, 0, 0.05)",
+          borderRadius: isScrolled ? "9999px" : "1.25rem",
+          backgroundColor: isScrolled ? "rgba(249, 245, 236, 0.92)" : "rgba(255, 253, 248, 0.98)",
+          boxShadow: isScrolled
+            ? "0 10px 30px -10px rgba(16, 61, 63, 0.12), 0 1px 3px 0 rgba(0, 167, 159, 0.08)"
+            : "0 1px 0 0 rgba(0,167,159,0.08)",
+          borderColor: isScrolled ? "rgba(0, 167, 159, 0.22)" : "rgba(0, 167, 159, 0.12)",
           paddingLeft: isScrolled ? "1.5rem" : "0.75rem",
           paddingRight: isScrolled ? "1.5rem" : "0.75rem",
         }}
@@ -56,11 +56,11 @@ export function Header() {
         {/* Logo */}
         <a href={baseHref("/")} className="group relative z-10 flex min-w-0 shrink-0 items-center">
           <img
-            src={baseHref("/logo-guaufresh.png")}
-            alt="Guau Fresh Logo"
-            width={800}
-            height={400}
-            className="h-[5.5rem] w-auto max-w-[min(100%,400px)] object-contain transition-transform duration-300 group-hover:scale-105 sm:h-24 md:h-28 lg:h-32"
+            src={baseHref("/logo-guaufresh.png?v=2")}
+            alt="Guau Fresh"
+            width={160}
+            height={160}
+            className="h-14 w-auto max-w-[min(100%,160px)] object-contain transition-transform duration-300 group-hover:scale-105 sm:h-16 md:h-[4.5rem]"
             decoding="async"
           />
         </a>
@@ -155,7 +155,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-border bg-white p-4 shadow-xl dark:bg-card lg:hidden"
+            className="absolute left-4 right-4 mt-2 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-xl dark:bg-card lg:hidden"
           >
             <nav className="flex flex-col gap-1" aria-label="Navegación móvil">
               {navLinks.map((link) => (

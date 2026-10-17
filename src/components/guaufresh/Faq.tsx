@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -40,9 +40,9 @@ export function Faq() {
   }
 
   return (
-    <section id="faq" className="bg-background py-20 sm:py-28 border-t border-border overflow-hidden relative">
-      {/* Elementos decorativos */}
-      <div className="absolute top-1/2 left-10 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="faq" className="bg-cream py-20 sm:py-28 border-t border-border overflow-hidden relative">
+      <div className="absolute top-1/2 left-10 w-[400px] h-[400px] blob bg-primary/10 pointer-events-none" aria-hidden />
+      <div className="absolute bottom-10 right-10 h-40 w-40 blob-alt bg-lime/25 pointer-events-none" aria-hidden />
       
       <div className="mx-auto max-w-4xl px-6 lg:px-8 relative z-10">
         {/* Cabecera */}
@@ -60,7 +60,7 @@ export function Faq() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="mt-4 font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+            className="mt-4 font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
           >
             Resuelve tus dudas
           </motion.h2>

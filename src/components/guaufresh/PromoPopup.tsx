@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 
@@ -31,7 +31,7 @@ export function PromoPopup() {
       id: "guaufresh-150ml",
       name: "Espuma Limpiadora Guau Fresh 150mL",
       price: 40500,
-      image: baseHref("/product-foam-150ml.webp?v=1"),
+      image: baseHref("/product-foam-150ml.webp?v=2"),
     })
     openCart(true)
     handleClose()

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { Minus, Plus, ShoppingCart, Trash2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -45,8 +45,8 @@ export function CartContent() {
                     <img
                       src={
                         (item.id.includes("150ml") || item.name.includes("150m") || item.name.includes("150M"))
-                          ? baseHref("/product-foam-150ml.webp?v=1") 
-                          : baseHref("/product-foam-50ml.webp?v=1")
+                          ? baseHref("/product-foam-150ml.webp?v=2") 
+                          : baseHref("/product-foam-50ml.webp?v=2")
                       }
                       alt={item.name}
                       className="h-full w-full object-cover"

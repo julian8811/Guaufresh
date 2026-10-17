@@ -67,7 +67,7 @@ export function BubbleEffect() {
       {bubbles.map((bubble) => (
         <motion.div
           key={bubble.id}
-          className="absolute rounded-full border border-primary/15 bg-gradient-to-tr from-primary/5 via-transparent to-white/10 backdrop-blur-[0.5px] will-change-transform shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]"
+          className="absolute rounded-full border-[1.5px] border-primary/30 bg-transparent will-change-transform"
           style={{
             left: `${bubble.x}%`,
             width: bubble.size,

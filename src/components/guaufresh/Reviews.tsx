@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useMemo, useCallback, type FormEvent } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -383,7 +383,9 @@ export function Reviews() {
   }
 
   return (
-    <section id="reseñas" className="bg-muted/30 py-20 sm:py-28 relative overflow-hidden">
+    <section id="reseñas" className="bg-primary/5 py-20 sm:py-28 relative overflow-hidden">
+      <div className="pointer-events-none absolute -left-16 top-16 h-56 w-56 blob bg-primary/10" aria-hidden />
+      <div className="pointer-events-none absolute -right-12 bottom-10 h-48 w-48 blob-alt bg-lime/25" aria-hidden />
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         
         {/* Título */}
@@ -393,7 +395,7 @@ export function Reviews() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-secondary text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+            className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-ink"
           >
             Lo que dicen nuestros clientes
           </motion.h2>
@@ -590,7 +592,7 @@ export function Reviews() {
         <DialogContent className="max-h-[min(90vh,640px)] overflow-y-auto sm:max-w-lg rounded-3xl border-border bg-card p-6 shadow-2xl">
           <form onSubmit={handleSubmitReview}>
             <DialogHeader>
-              <DialogTitle className="font-secondary text-2xl text-foreground font-normal">Escribe tu reseña</DialogTitle>
+              <DialogTitle className="font-display text-2xl text-foreground font-normal">Escribe tu reseña</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground mt-1">
                 Tu opinión se publicará en esta sección para ayudar a otras familias con mascotas.
               </DialogDescription>

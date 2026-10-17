@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { motion, AnimatePresence } from "framer-motion"
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react"
@@ -117,8 +117,8 @@ export function CartSheet() {
                           <img
                             src={
                               (item.id.includes("150ml") || item.name.includes("150m") || item.name.includes("150M"))
-                                ? baseHref("/product-foam-150ml.webp?v=1") 
-                                : baseHref("/product-foam-50ml.webp?v=1")
+                                ? baseHref("/product-foam-150ml.webp?v=2") 
+                                : baseHref("/product-foam-50ml.webp?v=2")
                             }
                             alt={item.name}
                             className="w-full h-full object-cover"

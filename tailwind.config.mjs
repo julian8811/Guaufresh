@@ -5,20 +5,22 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        /** Tipografía principal — cuerpo y UI base */
-        sans: ['"Montserrat"', 'sans-serif'],
-        primary: ['"Montserrat"', 'sans-serif'],
-        /** Tipografía secundaria — CTAs, títulos y marca */
-        secondary: ['"DM Serif Display"', 'serif'],
-        display: ['"DM Serif Display"', 'serif'],
-        /** Tipografía terciaria */
-        tertiary: ['"Montserrat"', 'sans-serif'],
-        hero: ['"DM Serif Display"', 'serif'],
-        carousel: ['"Montserrat"', 'sans-serif'],
+        sans: ['"Nunito"', 'system-ui', 'sans-serif'],
+        primary: ['"Nunito"', 'system-ui', 'sans-serif'],
+        secondary: ['"Cooper Black"', '"Fraunces"', 'Georgia', 'serif'],
+        display: ['"Cooper Black"', '"Fraunces"', 'Georgia', 'serif'],
+        tertiary: ['"Nunito"', 'system-ui', 'sans-serif'],
+        hero: ['"Cooper Black"', '"Fraunces"', 'Georgia', 'serif'],
+        carousel: ['"Nunito"', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        cream: 'var(--cream)',
+        ink: 'var(--ink)',
+        lime: 'var(--lime)',
+        mint: 'var(--mint)',
+        seafoam: 'var(--seafoam)',
         card: {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',

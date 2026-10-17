@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -40,7 +40,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     name: "Guau Fresh - Espuma Limpiadora 50mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Ideal para patitas y hocico.",
     price: 38000,
-    images: [baseHref("/product-foam-50ml.webp?v=1")],
+    images: [baseHref("/product-foam-50ml.webp?v=2")],
     stock: 100,
     category: "espuma"
   },
@@ -49,7 +49,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     name: "Guau Fresh - Espuma Limpiadora 150mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Rendimiento extendido para baños completos.",
     price: 45000,
-    images: [baseHref("/product-foam-150ml.webp?v=1")],
+    images: [baseHref("/product-foam-150ml.webp?v=2")],
     stock: 100,
     category: "espuma"
   }
@@ -109,8 +109,8 @@ export function Product() {
           return {
             ...product,
             images: is150
-              ? [baseHref("/product-foam-150ml.webp?v=1")]
-              : [baseHref("/product-foam-50ml.webp?v=1")]
+              ? [baseHref("/product-foam-150ml.webp?v=2")]
+              : [baseHref("/product-foam-50ml.webp?v=2")]
           }
         })
         setProducts(mappedData)
@@ -140,14 +140,14 @@ export function Product() {
           id: activePack.id,
           name: activePack.name,
           price: activePack.price,
-          image: baseHref("/product-foam-150ml.webp?v=1"),
+          image: baseHref("/product-foam-150ml.webp?v=2"),
         })
       } else {
         addItem({
           id: currentProduct.id,
           name: currentProduct.name,
           price: currentProduct.price,
-          image: baseHref("/product-foam-50ml.webp?v=1"),
+          image: baseHref("/product-foam-50ml.webp?v=2"),
         })
       }
       setIsAdding(false)
@@ -156,8 +156,11 @@ export function Product() {
   }
 
   return (
-    <section id="producto" className="bg-background py-20 sm:py-28 relative overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="producto" className="bg-cream py-20 sm:py-28 relative overflow-hidden">
+      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 blob bg-primary/15" aria-hidden />
+      <div className="pointer-events-none absolute -right-16 bottom-20 h-64 w-64 blob-alt bg-lime/35" aria-hidden />
+
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         
         {/* Contenedor principal asimétrico y moderno */}
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
@@ -169,10 +172,11 @@ export function Product() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, type: "spring" }}
-              className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] bg-gradient-to-tr from-primary/10 via-secondary/10 to-accent/20 p-4 sm:p-6 flex items-center justify-center border border-primary/10 shadow-md group"
+              className="relative w-full max-w-[400px] aspect-[4/5] flex items-center justify-center group"
             >
-              <div className="absolute top-6 left-6 inline-flex rounded-full bg-secondary/10 border border-secondary/20 px-3.5 py-1.5 text-xs font-semibold text-primary backdrop-blur-sm">
-                Envase Ecológico
+              <div className="absolute inset-6 blob bg-gradient-to-br from-primary/25 via-seafoam/40 to-lime/50" aria-hidden />
+              <div className="absolute top-6 left-6 z-10 inline-flex rounded-full bg-card border border-primary/20 px-3.5 py-1.5 text-xs font-bold text-primary shadow-sm">
+                Para mascotas
               </div>
 
               {/* Imagen principal animada */}
@@ -182,9 +186,9 @@ export function Product() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 whileHover={{ scale: 1.05, rotate: -2 }}
-                src={currentProduct?.images[0] || baseHref("/product-foam-50ml.webp?v=1")}
+                src={currentProduct?.images[0] || baseHref("/product-foam-50ml.webp?v=2")}
                 alt={currentProduct?.name || "Guau Fresh Espuma Limpiadora"}
-                className="h-[92%] sm:h-[95%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
+                className="relative z-10 h-[92%] sm:h-[95%] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,167,159,0.25)] transition-all cursor-grab active:cursor-grabbing will-change-gpu"
               />
 
               {/* Aura de fondo */}
@@ -205,8 +209,8 @@ export function Product() {
               </span>
               
               {/* Título de Marca MADE Dillan */}
-              <h2 className="mt-4 font-secondary text-4xl sm:text-5xl font-normal leading-tight text-foreground">
-                {currentProduct?.name.split(" - ")[1] || "Espuma Limpiadora en Seco"}
+              <h2 className="mt-4 font-display text-4xl sm:text-5xl font-normal leading-tight text-ink">
+                {currentProduct?.name.split(" - ")[1] || "Espuma Limpiadora para mascotas"}
               </h2>
               
               {/* Descripción */}
@@ -360,6 +364,25 @@ export function Product() {
                   </motion.li>
                 ))}
               </motion.ul>
+            </div>
+
+            {/* Sellos Manual 2026 */}
+            <div className="mt-8 grid grid-cols-3 gap-3">
+              {[
+                { label: "Libre de crueldad", icon: "🐰" },
+                { label: "Libre de parabenos", icon: "⚛" },
+                { label: "Vegano", icon: "🍃" },
+              ].map((seal) => (
+                <div
+                  key={seal.label}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-primary/20 bg-card px-2 py-3 text-center shadow-sm"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary text-lg" aria-hidden>
+                    {seal.icon}
+                  </span>
+                  <span className="text-[10px] sm:text-xs font-bold text-ink leading-tight">{seal.label}</span>
+                </div>
+              ))}
             </div>
 
             {/* Tabs de Información de Producto */}

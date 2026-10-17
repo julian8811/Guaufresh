@@ -1,7 +1,7 @@
 ---
 import type { Metadata } from 'astro';
 import '../styles/global.css';
-import { siteUrl } from '@/lib/site-url';
+import { absoluteAssetUrl, siteUrl } from '@/lib/site-url';
 
 interface Props {
   title?: string;
@@ -13,22 +13,25 @@ const publicSite = siteUrl();
 /** Public assets under `base` (GitHub Pages project site, etc.) */
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
+const ogImage = absoluteAssetUrl('/product-foam-150ml.webp');
+
 const metadata: Metadata = {
   title: {
-    default: 'Baño seco para perros en Colombia | Espuma limpiadora GuauFresh',
+    default: 'Espuma limpiadora para mascotas en Colombia | GuauFresh',
     template: '%s | Guau Fresh'
   },
-  description: 'Espuma limpiadora en seco para perros con ingredientes 100% naturales. Limpia, humecta y elimina el mal olor después del paseo sin agua y sin estrés.',
+  description: 'Espuma limpiadora en seco para perros y gatos. Vegana, libre de crueldad y de parabenos. Limpia, humecta y refresca sin agua y sin estrés.',
   keywords: [
     'espuma limpiadora perros',
+    'espuma limpiadora gatos',
     'shampoo seco perros',
     'limpieza en seco mascotas',
-    'cuidado pelaje perros',
-    'grooming perros Colombia',
-    'productos naturales mascotas',
+    'cuidado pelaje mascotas',
+    'grooming mascotas Colombia',
+    'productos veganos mascotas',
     'Guau Fresh',
-    'espuma para perros',
-    'limpiador pelaje canino',
+    'espuma para mascotas',
+    'limpiador pelaje',
     'higiene mascotas',
     'shampoo sin agua perros',
     'cuidado canino natural'
@@ -43,16 +46,16 @@ const metadata: Metadata = {
   },
   metadataBase: new URL(publicSite),
   openGraph: {
-    title: 'Guau Fresh | Espuma Limpiadora en Seco para Perros',
-    description: 'Limpia, humecta y da brillo al pelaje de tu mascota con ingredientes 100% naturales. Sin necesidad de agua.',
+    title: 'Guau Fresh | Espuma Limpiadora para Mascotas',
+    description: 'Frescura, limpieza y bienestar en segundos. Espuma vegana para perros y gatos, sin agua.',
     url: publicSite,
     siteName: 'Guau Fresh',
     images: [
       {
-        url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png',
+        url: ogImage,
         width: 1200,
         height: 630,
-        alt: 'Guau Fresh - Espuma Limpiadora para Perros',
+        alt: 'Guau Fresh - Espuma Limpiadora para mascotas',
       },
     ],
     locale: 'es_CO',
@@ -60,9 +63,9 @@ const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Guau Fresh | Espuma Limpiadora para Perros',
-    description: 'Limpia, humecta y da brillo al pelaje de tu mascota con ingredientes naturales.',
-    images: ['https://hebbkx1anhila5yf.public.blob.vercel-storage.com/post01_producto_ai_real-bnPpks8M8SlChOZAdQp2j5bVoHwUqD.png'],
+    title: 'Guau Fresh | Espuma Limpiadora para Mascotas',
+    description: 'Frescura, limpieza y bienestar en segundos. Cuidado vegano para perros y gatos.',
+    images: [ogImage],
   },
   robots: {
     index: true,
@@ -81,10 +84,6 @@ const metadata: Metadata = {
         sizes: '192x192',
         type: 'image/png',
       },
-      {
-        url: asset('/icon.svg'),
-        type: 'image/svg+xml',
-      },
     ],
     apple: asset('/favicon-paw.png'),
   },
@@ -98,7 +97,7 @@ const metadata: Metadata = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href={asset('/favicon-paw.png')} sizes="32x32" />
     <link rel="apple-touch-icon" href={asset('/favicon-paw.png')} />
-    <link rel="icon" type="image/svg+xml" href={asset('/icon.svg')} />
+    <meta name="theme-color" content="#00A79F" />
     <meta name="generator" content={Astro.generator} />
     <title>{title ? `${title} | Guau Fresh` : metadata.title?.default}</title>
     <meta name="description" content={metadata.description} />
@@ -114,7 +113,7 @@ const metadata: Metadata = {
     <meta name="twitter:image" content={metadata.twitter?.images?.[0]} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
     <!-- Meta Pixel Code -->
     <script is:inline>
       !function(f,b,e,v,n,t,s)
