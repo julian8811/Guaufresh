@@ -30,7 +30,7 @@ export function PromoPopup() {
     addItem({
       id: "guaufresh-150ml",
       name: "Espuma Limpiadora Guau Fresh 150mL",
-      price: 40500,
+      price: 40000,
       image: baseHref("/product-foam-150ml.webp?v=2"),
     })
     openCart(true)
@@ -93,16 +93,13 @@ export function PromoPopup() {
             id="popup-description"
             className="mt-2 text-pretty text-xs sm:text-sm text-muted-foreground"
           >
-            Hoy con tu primera compra obtienes un <span className="font-semibold text-primary">10% de descuento</span> en la Espuma Limpiadora Guau Fresh.
+            Espuma Limpiadora Guau Fresh 150&nbsp;mL al mejor precio, con envío a toda Colombia.
           </p>
 
           {/* Price - Responsive sizing */}
           <div className="mt-4 flex items-baseline gap-2 sm:gap-3">
-            <span className="text-2xl sm:text-3xl font-bold text-primary">$40.500</span>
-            <span className="text-xs sm:text-base text-muted-foreground line-through">$45.000</span>
-            <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-bold text-foreground">
-              -10%
-            </span>
+            <span className="text-2xl sm:text-3xl font-bold text-primary">$40.000</span>
+            <span className="text-xs sm:text-base text-muted-foreground">COP</span>
           </div>
 
           {/* Perks - Smaller text on mobile */}

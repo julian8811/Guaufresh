@@ -103,60 +103,36 @@ export function Benefits() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         
-        {/* Cabecera y Slider integrados en una grilla de dos columnas en desktop */}
-        <div className="grid gap-12 lg:grid-cols-12 items-center mb-16">
-          {/* Texto de Cabecera */}
-          <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left max-w-xl mx-auto lg:mx-0">
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-block text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 self-center lg:self-start"
-            >
-              Beneficios Clave
-            </motion.span>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="mt-4 font-display text-4xl sm:text-5xl font-normal tracking-tight text-ink leading-[1.15]"
-            >
-              Beneficios para tu mascota
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-6 text-base text-muted-foreground font-medium leading-relaxed"
-            >
-              Frescura, limpieza y bienestar en segundos. Cuidado práctico para perros y gatos, sin agua y sin estrés. 
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="mt-4 text-xs font-bold text-primary uppercase tracking-wider hidden lg:block"
-            >
-              Desliza la barra del comparador a la derecha para ver el cambio instantáneo
-            </motion.p>
-          </div>
-
-          {/* Slider integrado */}
-          <div className="lg:col-span-7 w-full flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="w-full max-w-2xl"
-            >
-              <BeforeAfter embed={true} />
-            </motion.div>
-          </div>
+        {/* Título único + comparador (sin bloque de párrafo suelto) */}
+        <div className="mb-10 text-center lg:mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-3xl font-normal tracking-tight text-ink sm:text-4xl md:text-5xl"
+          >
+            Beneficios para tu mascota
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.05 }}
+            className="mx-auto mt-2 max-w-xl text-sm font-medium text-muted-foreground sm:text-base"
+          >
+            Limpieza sin agua, en segundos.
+          </motion.p>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45 }}
+          className="mx-auto mb-12 w-full max-w-lg lg:mb-16 lg:max-w-xl"
+        >
+          <BeforeAfter embed={true} />
+        </motion.div>
 
         {/* Carrusel en mobile y Bento Grid en desktop */}
         {isMobile ? (

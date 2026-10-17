@@ -11,7 +11,7 @@ import { baseHref } from "@/lib/base-href"
 const PRODUCT = {
   id: "guaufresh-50ml", // default quick buy or we can add 150ml
   name: "Guau Fresh - Espuma Limpiadora 150mL",
-  price: 45000,
+  price: 40000,
   image: baseHref("/product-foam-150ml.webp?v=2"),
 }
 
@@ -41,7 +41,7 @@ export function StickyCTA() {
     addItem({
       id: "guaufresh-150ml",
       name: "Guau Fresh - Espuma Limpiadora 150mL",
-      price: 45000,
+      price: 40000,
       image: baseHref("/product-foam-150ml.webp?v=2"),
     })
     setIsOpen(true)
@@ -69,7 +69,7 @@ export function StickyCTA() {
                 Espuma 150mL
               </span>
               <span className="text-xs font-extrabold text-primary font-sans leading-none mt-0.5">
-                {formatPrice(45000)}
+                {formatPrice(40000)}
               </span>
             </div>
           </div>

@@ -39,15 +39,15 @@ const carouselSlides: Slide[] = [
     subtitle2: "sin estrés y sin enjuague",
   },
   {
-    src: baseHref("/carousel/hero-04.webp?v=3"),
-    alt: "Espuma Limpiadora Guau Fresh en mesa veterinaria",
+    src: baseHref("/carousel/hero-04.webp?v=4"),
+    alt: "Caniche blanco junto a Espuma Limpiadora Guau Fresh en casa",
     title: "Confianza Diaria",
     subtitle1: "pH seguro y libre de parabenos",
-    subtitle2: "cuidado experto y cercano",
+    subtitle2: "cuidado suave todos los días",
   },
   {
-    src: baseHref("/carousel/hero-05.webp?v=3"),
-    alt: "Cachorro golden recibiendo espuma Guau Fresh",
+    src: baseHref("/carousel/hero-05.webp?v=4"),
+    alt: "Aplicación de espuma Guau Fresh en la pata de un perro en casa",
     title: "Bienestar Real",
     subtitle1: "Limpieza suave entre baños",
     subtitle2: "para peludos sensibles",
@@ -92,7 +92,7 @@ const carouselSlides: Slide[] = [
 const PRODUCT = {
   id: "guaufresh-150ml",
   name: "Guau Fresh - Espuma Limpiadora 150mL",
-  price: 45000,
+  price: 40000,
   image: baseHref("/product-foam-150ml.webp?v=2"),
 }
 
@@ -218,7 +218,7 @@ export function HeroCarousel() {
                   <div className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 blob bg-primary/15" aria-hidden />
 
                   <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-primary sm:text-xs">
-                    <PawIcon className="h-3.5 w-3.5 text-accent" />
+                    <PawIcon className="h-3.5 w-3.5 text-primary" />
                     Cuidado vegano para mascotas
                   </span>
 
@@ -226,7 +226,7 @@ export function HeroCarousel() {
                     {slide.title}
                   </h1>
 
-                  <div className="paw-divider my-1.5 ml-0 mr-auto max-w-[8rem] text-accent">
+                  <div className="paw-divider my-1.5 ml-0 mr-auto max-w-[8rem] text-primary">
                     <PawIcon className="paw-divider-icon" />
                   </div>
 
@@ -239,7 +239,7 @@ export function HeroCarousel() {
 
                   <p className="mt-2 font-sans text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:text-xs md:text-sm">
                     Espuma Limpiadora 150&nbsp;mL ·{" "}
-                    <span className="font-extrabold text-primary">$45.000&nbsp;COP</span>
+                    <span className="font-extrabold text-primary">$40.000&nbsp;COP</span>
                   </p>
 
                   <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-5 sm:gap-3">

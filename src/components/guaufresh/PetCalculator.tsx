@@ -35,13 +35,13 @@ const PRODUCTS_DATA = {
   "guaufresh-50ml": {
     id: "guaufresh-50ml",
     name: "Guau Fresh - Espuma Limpiadora 50mL",
-    price: 38000,
+    price: 25000,
     volume: 50,
   },
   "guaufresh-150ml": {
     id: "guaufresh-150ml",
     name: "Guau Fresh - Espuma Limpiadora 150mL",
-    price: 45000,
+    price: 40000,
     volume: 150,
   },
 }

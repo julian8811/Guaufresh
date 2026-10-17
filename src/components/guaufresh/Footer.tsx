@@ -4,10 +4,9 @@ import { PawIcon } from "@/components/guaufresh/PawIcon"
 const footerLinks = [
   { href: "#inicio", label: "Inicio" },
   { href: "#producto", label: "Producto" },
-  { href: "#beneficios", label: "Beneficios" },
-  { href: "#galeria", label: "Galería" },
-  { href: "#reseñas", label: "Reseñas" },
   { href: "#como-usar", label: "Cómo usar" },
+  { href: "#beneficios", label: "Beneficios" },
+  { href: "#reseñas", label: "Reseñas" },
   { href: "#contacto", label: "Contacto" },
 ]
 

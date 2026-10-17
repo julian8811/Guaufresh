@@ -235,8 +235,7 @@ export function LeadSidebar() {
               <div>
                 <p className="text-sm font-medium text-foreground">Guau Fresh 150mL</p>
                 <p className="text-xs text-muted-foreground">
-                  <span className="line-through">$45.000</span>{" "}
-                  <span className="font-bold text-primary">$38.250</span>
+                  <span className="font-bold text-primary">$40.000</span>
                 </p>
               </div>
             </div>

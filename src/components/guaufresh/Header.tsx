@@ -9,10 +9,9 @@ import { baseHref } from "@/lib/base-href"
 
 const navLinks = [
   { href: "#inicio", label: "Inicio" },
-  { href: "#beneficios", label: "Beneficios" },
-  { href: "#galeria", label: "Galería" },
   { href: "#producto", label: "Producto" },
   { href: "#como-usar", label: "Cómo usar" },
+  { href: "#beneficios", label: "Beneficios" },
   { href: "#reseñas", label: "Reseñas" },
   { href: "#contacto", label: "Contacto" },
 ]
