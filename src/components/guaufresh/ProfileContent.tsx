@@ -21,8 +21,8 @@ interface Order {
 }
 
 const mockOrders: Order[] = [
-  { id: "ORD-001", date: "2024-01-15", status: "completed", total: 45000, items: 2 },
-  { id: "ORD-002", date: "2024-02-01", status: "processing", total: 38000, items: 1 },
+  { id: "ORD-001", date: "2024-01-15", status: "completed", total: 40000, items: 2 },
+  { id: "ORD-002", date: "2024-02-01", status: "processing", total: 25000, items: 1 },
 ]
 
 export function ProfileContent() {

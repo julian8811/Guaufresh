@@ -45,11 +45,11 @@ export function Hero() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-6">
               <div className="rounded-lg bg-secondary/20 px-4 py-3">
                 <p className="text-xs text-primary-foreground/80">Envase 50 mL</p>
-                <p className="text-2xl font-bold text-primary-foreground">$38.000 COP</p>
+                <p className="text-2xl font-bold text-primary-foreground">$25.000 COP</p>
               </div>
               <div className="rounded-lg bg-secondary/20 px-4 py-3">
                 <p className="text-xs text-primary-foreground/80">Envase 150 mL</p>
-                <p className="text-2xl font-bold text-primary-foreground">$45.000 COP</p>
+                <p className="text-2xl font-bold text-primary-foreground">$40.000 COP</p>
               </div>
             </div>
 

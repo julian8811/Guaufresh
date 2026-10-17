@@ -40,7 +40,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     id: "guaufresh-50ml",
     name: "Guau Fresh - Espuma Limpiadora 50mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Ideal para patitas y hocico.",
-    price: 38000,
+    price: 25000,
     images: [baseHref("/product-foam-50ml.webp?v=2")],
     stock: 100,
     category: "espuma"
@@ -49,7 +49,7 @@ const FALLBACK_PRODUCTS: ProductData[] = [
     id: "guaufresh-150ml",
     name: "Guau Fresh - Espuma Limpiadora 150mL",
     description: "Espuma limpiadora en seco para perros y gatos con proteínas vegetales y extractos naturales. Rendimiento extendido para baños completos.",
-    price: 45000,
+    price: 40000,
     images: [baseHref("/product-foam-150ml.webp?v=2")],
     stock: 100,
     category: "espuma"
@@ -60,21 +60,21 @@ export const PACKS_DATA = [
   {
     id: "guaufresh-150ml",
     name: "Guau Fresh 150mL - Individual",
-    price: 45000,
-    desc: "1 Botella. Rinde hasta 60 limpiezas ($750 por uso).",
+    price: 40000,
+    desc: "1 Botella. Rinde hasta 60 limpiezas ($667 por uso).",
     badge: null,
   },
   {
     id: "guaufresh-duo-150ml",
     name: "Guau Fresh 150mL - Pack Dúo (Ahorra 10%)",
-    price: 81000,
+    price: 72000,
     desc: "2 Botellas. Rinde hasta 120 limpiezas. ¡Envío gratis!",
     badge: "Más Vendido",
   },
   {
     id: "guaufresh-kit-150ml",
     name: "Guau Fresh 150mL - Kit Paseo Premium",
-    price: 55000,
+    price: 50000,
     desc: "1 Botella + Toallita de microfibra premium absorbente.",
     badge: "Recomendado",
   }
@@ -130,7 +130,7 @@ export function Product() {
   const currentProduct = products.find(p => p.id === selectedSize) || products[0]
   const is150ml = selectedSize === "guaufresh-150ml" || (currentProduct && (currentProduct.id.includes("150ml") || currentProduct.name.includes("150m") || currentProduct.name.includes("150M")))
   const activePack = PACKS_DATA.find(p => p.id === selectedPackId) || PACKS_DATA[0]
-  const displayPrice = is150ml ? activePack.price : (currentProduct?.price || 38000)
+  const displayPrice = is150ml ? activePack.price : (currentProduct?.price || 25000)
 
   const handleAddToCart = () => {
     if (!currentProduct) return

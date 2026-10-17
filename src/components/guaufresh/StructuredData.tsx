@@ -21,10 +21,23 @@ export function StructuredData() {
     offers: [
       {
         "@type": "Offer",
+        name: "Guau Fresh 50mL",
+        url: base,
+        priceCurrency: "COP",
+        price: "25000",
+        priceValidUntil: "2026-12-31",
+        availability: "https://schema.org/InStock",
+        seller: {
+          "@type": "Organization",
+          name: "Guau Fresh Colombia"
+        }
+      },
+      {
+        "@type": "Offer",
         name: "Guau Fresh 150mL - Individual",
         url: base,
         priceCurrency: "COP",
-        price: "45000",
+        price: "40000",
         priceValidUntil: "2026-12-31",
         availability: "https://schema.org/InStock",
         seller: {
@@ -37,7 +50,7 @@ export function StructuredData() {
         name: "Guau Fresh 150mL - Pack Dúo (10% Descuento)",
         url: base,
         priceCurrency: "COP",
-        price: "81000",
+        price: "72000",
         priceValidUntil: "2026-12-31",
         availability: "https://schema.org/InStock",
         seller: {
@@ -50,7 +63,7 @@ export function StructuredData() {
         name: "Guau Fresh 150mL - Kit Paseo Premium (con Toalla)",
         url: base,
         priceCurrency: "COP",
-        price: "55000",
+        price: "50000",
         priceValidUntil: "2026-12-31",
         availability: "https://schema.org/InStock",
         seller: {
