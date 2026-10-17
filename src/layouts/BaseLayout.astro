@@ -1,7 +1,7 @@
 ---
 import type { Metadata } from 'astro';
 import '../styles/global.css';
-import { siteUrl } from '@/lib/site-url';
+import { absoluteAssetUrl, siteUrl } from '@/lib/site-url';
 
 interface Props {
   title?: string;
@@ -13,7 +13,7 @@ const publicSite = siteUrl();
 /** Public assets under `base` (GitHub Pages project site, etc.) */
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
-const ogImage = new URL(asset('/product-foam-150ml.webp'), publicSite).toString();
+const ogImage = absoluteAssetUrl('/product-foam-150ml.webp');
 
 const metadata: Metadata = {
   title: {
