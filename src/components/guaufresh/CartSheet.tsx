@@ -96,7 +96,7 @@ export function CartSheet() {
                 </div>
                 <p className="mt-2 text-[0.72rem] text-muted-foreground leading-relaxed text-center font-medium">
                   {totalPrice >= 150000
-                    ? "¡Felicidades! Tu envío es 100% gratuito de regalo 🎉"
+                    ? "¡Felicidades! Tu envío es 100% gratuito"
                     : `Suma ${formatPrice(150000 - totalPrice)} más a tu compra y te regalamos el envío.`}
                 </p>
               </div>

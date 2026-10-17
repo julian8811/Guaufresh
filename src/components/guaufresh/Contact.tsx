@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react"
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -163,7 +163,7 @@ export function Contact() {
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="mr-2 animate-spin">⏳</span>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
                       Enviando…
                     </>
                   ) : (

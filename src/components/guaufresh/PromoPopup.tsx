@@ -67,12 +67,12 @@ export function PromoPopup() {
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        {/* Top image band - Smaller height on mobile */}
-        <div className="relative h-40 w-full bg-primary sm:h-52">
+        {/* Top image band */}
+        <div className="relative aspect-[1024/571] w-full bg-primary">
           <img
               src={baseHref("/reviews/max-bulldog-frances.png")}
               alt="Bulldog feliz con Guau Fresh"
-              className="h-full w-full object-cover object-top opacity-80"
+              className="h-full w-full object-cover opacity-80"
             />
           {/* Badge */}
           <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs sm:text-sm font-bold text-foreground shadow">

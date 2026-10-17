@@ -8,10 +8,10 @@ export function BeforeAfter({ embed = false }: { embed?: boolean }) {
   const [position, setPosition] = useState(50)
 
   const slider = (
-    <div className="relative w-full max-w-3xl mx-auto aspect-square md:aspect-[4/3] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-xl border border-border bg-muted/20 select-none">
+    <div className="relative w-full max-w-xl mx-auto aspect-square rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-xl border border-border bg-muted/20 select-none">
       {/* 1. Imagen del Después (Fondo - Limpio) */}
       <img 
-        src={baseHref('/after-paw.png')} 
+        src={baseHref('/after-paw.png?v=3')} 
         alt="Pata limpia con espuma Guau Fresh" 
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         loading="lazy"
@@ -22,7 +22,7 @@ export function BeforeAfter({ embed = false }: { embed?: boolean }) {
 
       {/* 2. Imagen del Antes (Frente - Sucio) con recorte clipPath */}
       <img 
-        src={baseHref('/before-paw.png')} 
+        src={baseHref('/before-paw.png?v=3')} 
         alt="Pata sucia de barro antes de limpiar" 
         className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
         style={{ clipPath: `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)` }}

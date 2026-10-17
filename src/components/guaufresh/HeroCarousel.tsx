@@ -167,30 +167,41 @@ export function HeroCarousel() {
       <div className="pointer-events-none absolute -right-24 -top-16 h-72 w-72 blob bg-primary/25 blur-sm" aria-hidden />
       <div className="pointer-events-none absolute -left-20 bottom-10 h-56 w-56 blob-alt bg-lime/40 blur-sm" aria-hidden />
 
-      <div className="relative min-h-[60vh] sm:min-h-[75vh] md:min-h-[85vh] lg:min-h-[90vh] w-full flex items-center justify-center">
-        <div className="absolute inset-0 overflow-hidden">
+      <div className="relative w-full flex flex-col md:flex-row md:items-center md:min-h-[85vh] lg:min-h-[90vh]">
+        <div className="relative aspect-square w-full overflow-hidden bg-cream md:absolute md:inset-0 md:aspect-auto">
           <AnimatePresence initial={false} custom={direction}>
-            <motion.img
+            <motion.div
               key={`slide-${current}`}
-              src={slide.src}
-              alt={slide.alt}
               custom={direction}
               variants={slideVariants}
               initial="enter"
               animate="center"
               exit="exit"
-              className="absolute inset-0 h-full w-full object-cover object-center"
-              decoding="async"
-            />
+              className="absolute inset-0"
+            >
+              <img
+                src={slide.src}
+                alt=""
+                aria-hidden
+                className="absolute inset-0 hidden h-full w-full scale-110 object-cover blur-2xl opacity-60 md:block"
+                decoding="async"
+              />
+              <img
+                src={slide.src}
+                alt={slide.alt}
+                className="absolute inset-0 h-full w-full object-contain object-center md:object-right"
+                decoding="async"
+              />
+            </motion.div>
           </AnimatePresence>
         </div>
 
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/15 to-transparent md:bg-gradient-to-r md:from-ink/40 md:via-ink/10 md:to-transparent"
+          className="pointer-events-none absolute inset-0 hidden md:block bg-gradient-to-r from-cream/70 via-cream/20 to-transparent"
           aria-hidden
         />
 
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 py-12 md:py-24 flex items-end md:items-center justify-start h-full">
+        <div className="container relative z-10 mx-auto -mt-6 px-4 pb-16 sm:px-6 md:mt-0 md:py-24 flex items-end md:items-center justify-start h-full">
           <div className="w-full max-w-[90vw] sm:max-w-md md:max-w-lg lg:max-w-xl text-left">
             <AnimatePresence mode="wait">
               <motion.div
@@ -286,7 +297,7 @@ export function HeroCarousel() {
               type="button"
               onClick={() => setCurrent(idx)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                current === idx ? "w-6 bg-primary" : "w-2 bg-cream/70 hover:bg-cream"
+                current === idx ? "w-6 bg-primary" : "w-2 bg-ink/25 hover:bg-ink/50"
               }`}
               aria-label={`Ver imagen ${idx + 1}`}
             />

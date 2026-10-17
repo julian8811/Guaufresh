@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, ShoppingCart, Info, Dog } from "lucide-react"
+import { Check, ShoppingCart, Info, Dog, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
 import { formatPrice } from "@/lib/utils"
@@ -258,7 +258,7 @@ export function PetCalculator() {
                   className="w-full gap-3 bg-primary text-white hover:bg-primary/95 font-sans font-bold text-sm uppercase tracking-wider rounded-2xl h-14 shadow-lg shadow-primary/15"
                 >
                   {isAdding ? (
-                    <span className="animate-spin mr-2">⏳</span>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
                   ) : (
                     <ShoppingCart className="h-4 w-4" />
                   )}

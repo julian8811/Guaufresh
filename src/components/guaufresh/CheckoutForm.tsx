@@ -387,7 +387,7 @@ Notas: ${orderData.notes || 'Sin notas'}`
             >
               {isProcessing ? (
                 <>
-                  <span className="mr-2 animate-spin">⏳</span>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
                   Procesando...
                 </>
               ) : (
