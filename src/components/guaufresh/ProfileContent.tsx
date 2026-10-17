@@ -31,7 +31,7 @@ export function ProfileContent() {
     name: "Juan Pérez",
     email: "juan@email.com",
     phone: "+57 300 123 4567",
-    location: "Bogotá, Colombia",
+    location: "Medellín, Colombia",
   })
 
   const [editedProfile, setEditedProfile] = useState(profile)

@@ -81,7 +81,7 @@ export function Footer() {
           </p>
 
           <div
-            className="flex flex-wrap items-center justify-center gap-5 order-1 sm:order-2"
+            className="flex flex-wrap items-center justify-center gap-2.5 order-1 sm:order-2 sm:gap-3"
             aria-label="Métodos de pago aceptados"
           >
             {[
@@ -93,13 +93,17 @@ export function Footer() {
               ["daviplata.png", "Daviplata", "h-4 sm:h-5"],
               ["efecty.png", "Efecty", "h-4 sm:h-5"],
             ].map(([file, alt, cls]) => (
-              <img
+              <span
                 key={file}
-                src={baseHref(`/payments/${file}`)}
-                alt={alt}
-                className={`${cls} w-auto object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity`}
-                loading="lazy"
-              />
+                className="inline-flex items-center justify-center rounded-md bg-white px-2.5 py-1.5 shadow-sm"
+              >
+                <img
+                  src={baseHref(`/payments/${file}`)}
+                  alt={alt}
+                  className={`${cls} w-auto object-contain`}
+                  loading="lazy"
+                />
+              </span>
             ))}
           </div>
         </div>

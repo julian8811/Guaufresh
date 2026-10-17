@@ -74,7 +74,7 @@ export function Contact() {
                 <div>
                   <h3 className="font-bold text-foreground">Ubicación</h3>
                   <p className="mt-1 text-muted-foreground font-medium">
-                    Bogotá, Colombia
+                    Medellín, Colombia
                   </p>
                 </div>
               </div>
