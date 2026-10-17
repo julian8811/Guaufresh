@@ -462,7 +462,7 @@ export function Reviews() {
                 >
                   <Card className="relative flex h-full flex-col overflow-hidden bg-card border border-border shadow-sm rounded-3xl transition-all">
                     {/* Imagen de la mascota */}
-                    <div className="relative h-56 w-full overflow-hidden bg-muted group">
+                    <div className="relative aspect-[1024/571] w-full overflow-hidden bg-muted group">
                       <img
                         src={review.petImage}
                         alt={`${review.petName} - ${review.petBreed}`}

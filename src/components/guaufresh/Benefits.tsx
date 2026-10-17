@@ -140,7 +140,7 @@ export function Benefits() {
               transition={{ duration: 0.5, delay: 0.15 }}
               className="mt-4 text-xs font-bold text-primary uppercase tracking-wider hidden lg:block"
             >
-              Desliza la barra del comparador a la derecha para ver el cambio instantáneo 🐾👉
+              Desliza la barra del comparador a la derecha para ver el cambio instantáneo
             </motion.p>
           </div>
 

@@ -13,7 +13,7 @@ const STORAGE_KEY = "guaufresh_chat_history"
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 const MODEL_NAME = "llama-3.3-70b-versatile"
 
-const SYSTEM_PROMPT = `Eres el "Asistente Guau Fresh 🐾", un asistente de inteligencia artificial súper amigable y entusiasta que responde preguntas sobre la tienda Guau Fresh en Colombia. Tu objetivo es ayudar a los clientes y resolver dudas con calidez y un tono que refleje amor por los animales.
+const SYSTEM_PROMPT = `Eres el "Asistente Guau Fresh", un asistente de inteligencia artificial amable y profesional que responde preguntas sobre la tienda Guau Fresh en Colombia. Tu objetivo es ayudar a los clientes y resolver dudas con calidez y un tono que refleje amor por los animales.
 
 Detalles importantes sobre Guau Fresh que DEBÉS saber y usar:
 1. Producto Principal: Espuma Limpiadora en Seco para perros y gatos (¡segura para todas las edades!). No requiere agua ni enjuague.
@@ -46,7 +46,7 @@ Detalles importantes sobre Guau Fresh que DEBÉS saber y usar:
 
 Reglas de comportamiento:
 - Hablá de forma alegre y cercana, usando modismos colombianos o un tono neutro y muy cariñoso con los peludos.
-- Usá emojis relacionados con mascotas y limpieza (🐾, 🐶, 🐱, 🧼, 🫧, 🐕, ✨).
+- No usés emojis ni emoticonos; mantené un tono cercano pero sobrio y profesional.
 - Sé breve y conciso en tus respuestas. Evitá textos larguísimos; es mejor responder en 2 o 3 párrafos cortos como máximo.
 - Si el usuario te pregunta por temas completamente ajenos a mascotas o a Guau Fresh, redirigí la conversación amablemente diciendo que estás programado para hablar de limpieza canina/felina y bienestar animal.`
 
@@ -55,7 +55,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "¡Hola! 🐾 Soy tu Asistente Guau Fresh. ¿En qué puedo ayudarte hoy? Preguntame sobre nuestros ingredientes, cómo usar la espuma o sobre tu pedido. 🐶✨",
+      content: "¡Hola! Soy tu Asistente Guau Fresh. ¿En qué puedo ayudarte hoy? Preguntame sobre nuestros ingredientes, cómo usar la espuma o sobre tu pedido.",
     },
   ])
   const [input, setInput] = useState("")
@@ -104,7 +104,7 @@ export function ChatBot() {
           ...updatedMessages,
           {
             role: "assistant",
-            content: "Lo siento, la clave de la API de chat no está configurada correctamente en el servidor. Por favor, intenta de nuevo más tarde o comunícate por WhatsApp. 🐾",
+            content: "Lo siento, la clave de la API de chat no está configurada correctamente en el servidor. Por favor, intenta de nuevo más tarde o comunícate por WhatsApp.",
           },
         ])
         setIsLoading(false)
@@ -138,7 +138,7 @@ export function ChatBot() {
       }
 
       const data = await response.json()
-      const assistantReply = data.choices?.[0]?.message?.content || "Lo siento, no pude procesar tu respuesta en este momento. 🐾"
+      const assistantReply = data.choices?.[0]?.message?.content || "Lo siento, no pude procesar tu respuesta en este momento."
       
       saveMessages([...updatedMessages, { role: "assistant", content: assistantReply }])
     } catch (error) {
@@ -147,7 +147,7 @@ export function ChatBot() {
         ...updatedMessages,
         {
           role: "assistant",
-          content: "¡Uy! Tuve un problemita de conexión. ¿Me lo podés volver a preguntar o lo intentamos de nuevo? 🐾",
+          content: "¡Uy! Tuve un problemita de conexión. ¿Me lo podés volver a preguntar o lo intentamos de nuevo?",
         },
       ])
     } finally {

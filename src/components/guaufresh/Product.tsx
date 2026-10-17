@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, ShoppingCart, Loader2 } from "lucide-react"
+import { Check, ShoppingCart, Loader2, Rabbit, FlaskConicalOff, Leaf } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/cart-store"
 import { formatPrice } from "@/lib/utils"
@@ -369,16 +369,16 @@ export function Product() {
             {/* Sellos Manual 2026 */}
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                { label: "Libre de crueldad", icon: "🐰" },
-                { label: "Libre de parabenos", icon: "⚛" },
-                { label: "Vegano", icon: "🍃" },
+                { label: "Libre de crueldad", Icon: Rabbit },
+                { label: "Libre de parabenos", Icon: FlaskConicalOff },
+                { label: "Vegano", Icon: Leaf },
               ].map((seal) => (
                 <div
                   key={seal.label}
                   className="flex flex-col items-center gap-2 rounded-2xl border border-primary/20 bg-card px-2 py-3 text-center shadow-sm"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary text-lg" aria-hidden>
-                    {seal.icon}
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary text-primary" aria-hidden>
+                    <seal.Icon className="h-5 w-5" strokeWidth={2} />
                   </span>
                   <span className="text-[10px] sm:text-xs font-bold text-ink leading-tight">{seal.label}</span>
                 </div>
